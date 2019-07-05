@@ -1,23 +1,41 @@
 package com.eomcs.lms;
 
+import java.sql.Date;
 import java.util.Scanner;
 
 public class App3 {
   private static java.io.InputStream keyboard = System.in;
 
   public static void main(String[] args) {
-    String number = getStringValue("번호는");
-    String content = getStringValue("내용은");
-    java.sql.Date writeDate = getDateValue("작성일은");
-    int visitNum = getIntValue("조회수는");
-
+    Scanner keyscan = new Scanner(keyboard);
+    String []number = new String[100];
+    String []content = new String[100];
+    Date []writeDate = new Date [100];
+    int []visitNum = new int [100];
+    
+    
+    int i =0;
+    
+    
+    while(true) {
+    
+    number[i] = getStringValue("번호는");
+    content[i] = getStringValue("내용은");
+    writeDate[i] = getDateValue("작성일은");
+    visitNum[i] = getIntValue("조회수는");
+    i++;
+    System.out.println("y/n선택");
+    String check = keyscan.nextLine();
+    if(!check.equals("y")) {
+      break;
+    }
+    }
     System.out.println();
-
-    System.out.println("번호: " + number);
-    System.out.println("내용: " + content);
-    System.out.println("작성일: " + writeDate);
-    System.out.println("조회수: " + visitNum);
-  }
+    for(int i2 =0; i2<i ; i2++) {
+    System.out.printf("%s ,%s,%s,%s \n",number[i2],content[i2],writeDate[i2],visitNum[i2]);
+    
+    }
+    }
 
   private static int getIntValue(String message) {
     while (true) {
