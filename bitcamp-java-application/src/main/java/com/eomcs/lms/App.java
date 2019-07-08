@@ -7,10 +7,6 @@ import java.util.Scanner;
 
 public class App {
   static Scanner keyScan;
-
-
- 
-
   public static void main(String[] args) {
     java.io.InputStream keyboard = System.in;
     keyScan = new Scanner(keyboard);
@@ -39,7 +35,6 @@ public class App {
       System.out.println();
     }
   }
-
   static String prompt() {
     System.out.println("명령>");
     return keyScan.nextLine();

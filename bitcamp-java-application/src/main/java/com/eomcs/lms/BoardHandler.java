@@ -10,10 +10,10 @@ public class BoardHandler {
   
   static void addBoard() {
     Board board = new Board();
-    board.no = getStringValue("번호는");
-    board.contents = getStringValue("내용은");
-    board.createdDate = getDateValue("작성일은");
-    board.viewCount = getIntValue("조회수는");
+    board.no = Input.getStringValue("번호는");
+    board.contents = Input.getStringValue("내용은");
+    board.createdDate = Input.getDateValue("작성일은");
+    board.viewCount = Input.getIntValue("조회수는");
 
     boards[boardssize++] = board;
     System.out.println("저장하였습니다.");
@@ -29,32 +29,5 @@ public class BoardHandler {
     }
   }
 
-  private static int getIntValue(String message) {
-    int value = 0;
-    while (true) {
-      try {
-        System.out.print(message);
-        return Integer.parseInt(keyScan.nextLine());
-      } catch (NumberFormatException e) {
-        System.out.println("숫자를 입력하세요.");
-      }
-    }
-  }
-
-  private static String getStringValue(String message) {
-    System.out.print(message);
-    return keyScan.nextLine();
-  }
-
-  private static Date getDateValue(String message) {
-    while (true) {
-      try {
-        System.out.print(message);
-        return Date.valueOf(keyScan.nextLine());
-      } catch (IllegalArgumentException e) {
-        System.out.println("2019-07-05 형식으로 입력하세요.");
-      }
-    }
-  }
 
 }
