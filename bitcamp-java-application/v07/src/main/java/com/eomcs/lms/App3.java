@@ -1,6 +1,5 @@
 package com.eomcs.lms;
 
-import java.sql.Date;
 import java.util.Scanner;
 
 public class App3 {
@@ -20,10 +19,10 @@ public class App3 {
     for(i =0; i<list.length; i++ ) {
     
       Board k = new Board ();
-    k.number = getStringValue("번호는");
-    k.content = getStringValue("내용은");
-    k.writeDate = getDateValue("작성일은");
-    k.visitNum = getIntValue("조회수는");
+    k.no = getStringValue("번호는");
+    k.contents = getStringValue("내용은");
+    k.createdDate = getDateValue("작성일은");
+    k.viewCount = getIntValue("조회수는");
     
     list[i]= k ;
     
@@ -39,10 +38,12 @@ public class App3 {
       Board k = new Board();
       k = list[i2];
       
-    System.out.printf("%s ,%s,%s,%s \n",k.number,k.content,k.writeDate,k.visitNum);
+    System.out.printf("%s ,%s,%s,%s \n",k.no,k.contents,k.createdDate,k.viewCount);
     
     }
+    keyscan.close();
     }
+    
 
   private static int getIntValue(String message) {
     while (true) {
@@ -64,8 +65,9 @@ public class App3 {
       Scanner keyscan = new Scanner(keyboard);
       String num = keyscan.nextLine();
       return num;
-
+      
     }
+    
   }
 
   private static java.sql.Date getDateValue(String message) {

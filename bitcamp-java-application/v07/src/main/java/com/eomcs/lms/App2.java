@@ -9,23 +9,24 @@ public class App2 {
   public static void main(String[] args) {
 
     Scanner keyscan = new Scanner(keyboard);
-    Member [] list1 = new Member[100];
-    
-    
-    
+    Member[] members = new Member[100];
+
+
+
     int i = 0;
-    for(i=0; i<list1.length; i++) {
-      Member k= new Member();
+    for (i = 0; i < members.length; i++) {
+      Member member = new Member();
+
+      member.no = getIntValue("번호는");
+      member.name = getStringValue("이름은");
+      member.email = getStringValue("이메일은");
+      member.password = getStringValue("비밀번호는");
+      member.photo = getStringValue("사진은");
+      member.phoneNumber = getStringValue("전화번호는");
+      member.registerDate = new Date(System.currentTimeMillis());
+
       
-      k.num = getIntValue("번호는");
-      k.name = getStringValue("이름은");
-      k.email = getStringValue("이메일은");
-      k.password = getStringValue("비밀번호는");
-      k.photo = getStringValue("사진은");
-      k.phoneNumber = getStringValue("전화번호는");
-      k.joinDate = getDateValue("가입일은");
-      
-      list1 [i]= k;
+      members[i] = member;
       System.out.println("y/n을 선택 ");
       String check = keyscan.nextLine();
       if (!check.equals("y")) {
@@ -34,12 +35,12 @@ public class App2 {
     }
     System.out.println();
     for (int i2 = 0; i2 <= i; i2++) {
-          Member k = new Member();
-          k = list1[i2];
-      
-      
-      System.out.printf("%s, %s, %s, %s, %s, %s, %s\n",k.num, k.name, k.email, k.password,
-          k.photo, k.phoneNumber, k.joinDate);
+      Member member = new Member();
+      member = members[i2];
+
+
+      System.out.printf("%s, %s, %s, %s, %s, %s, %s\n", member.no, member.name, member.email,
+          member.password, member.photo, member.phoneNumber, member.registerDate);
     }
   }
 
