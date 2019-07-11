@@ -1,8 +1,10 @@
 // 클래스 로딩과 클래스 필드의 생성, Method Area의 관계
 package ch08;
 
+import java.util.Scanner;
+
 class My2 {
-  // 클래스 필드
+  // 클래스(스태틱) 필드
   static String manager = "관리자";
   static String member = "회원";
   static String guest = "손님";
@@ -15,6 +17,16 @@ class My2 {
 
 public class Test02 {
   public static void main(String[] args) {
+    
+    My2 temp;//클래스에 대하여 레퍼런스 변수를 만들때는 클래스를 로딩하지않는다 
+    Scanner keyScan = new Scanner(System.in);
+    System.out.println("> ");
+    keyScan.nextLine(); //사용자가 입력한값중에서 line feed(lf; 0X0A)코드를 읽을때까지 
+                        //리턴하지않는다.
+    // 다음과 같이 my 2를 사용하지는 시점에 my2.class파일을 메소드에어리어에 로딩한다
+    //이것을 테스트하려면 이클래스를 실행하기전에 my2.class를 삭제하라 
+    //그리고 이클래스를 실행하면  위의코드를 실행할때는 오류가 발생하지않는다 
+    //그러나 아래의 코드를 실행할때 my2.class가 없다고 오류가 발생한다 . 
     System.out.println(My2.manager);
     System.out.println(My2.member);
     
@@ -26,7 +38,7 @@ public class Test02 {
     //    - args 변수를 스택 영역에 생성한다.
     // 4) main()의 코드를 실행한다.
     //    - My2.class 를 "Method Area"에 로딩한다.
-    //    - My2의 클래스를 필드를 "Method Area"에 생성한다.
+    //    - My2의 클래스 필드를 "Method Area"에 생성한다.
     //    - System.out.println(My2.manager) 를 실행한다.
     //    - My2 클래스가 이미 로딩되었기 때문에 다시 로딩하지 않는다.
     //    - System.out.println(My2.member) 를 실행한다.

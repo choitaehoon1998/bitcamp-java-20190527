@@ -27,7 +27,7 @@ class Monitor10 {
     this.heightRes = heightRes;
     System.out.println("Monitor10(int, int, int, int)");
   }
-  
+
   public void on() {
     // 주의!
     // 일반 메서드는 생성자를 호출할 수 없다.

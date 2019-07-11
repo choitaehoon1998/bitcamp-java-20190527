@@ -38,7 +38,6 @@ public class Test02 {
     float aver = sum / 3f;
     System.out.printf("%s: %d, %d, %d, %d, %f\n", name, kor, eng, math, sum, aver);
   }
-  
 }
 
 /*
@@ -46,18 +45,3 @@ public class Test02 {
 1) 사용자 정의 데이터 타입과 그 타입의 값을 다루는 연산자를 정의할 때 사용한다.
 2) 서로 관련된 일을 하는 메서드를 관리하기 쉽게 분류하여 묶는 용도로 사용한다.
  */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

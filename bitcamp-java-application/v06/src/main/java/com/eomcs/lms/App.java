@@ -1,69 +1,83 @@
+    
+// 애플리케이션 메인 클래스
+// => 애플리케이션을 실행할 때 이 클래스를 실행한다.
 package com.eomcs.lms;
 
 import java.sql.Date;
 import java.util.Scanner;
 
 public class App {
-
+  static Scanner keyScan;
+  
   public static void main(String[] args) {
+    java.io.InputStream keyboard = System.in;
+    keyScan = new Scanner(keyboard);
     
-    Scanner keyboard = new Scanner(System.in);
-
-    final int LENGTH = 10;
-    
-    int[] no = new int[LENGTH];
-    String[] title = new String[LENGTH];
-    String[] contents = new String[LENGTH];
-    Date[] startDate = new Date[LENGTH];
-    Date[] endDate = new Date[LENGTH];
-    int[] totalHours = new int[LENGTH];
-    int[] dayHours = new int[LENGTH];
+    int[] no = new int[100];
+    String[] lectureName = new String[100];
+    String[] description = new String[100];
+    Date[] startDate = new Date[100];
+    Date[] endDate = new Date[100];
+    int[] totalHours = new int[100];
+    int[] dayHours = new int[100];
     
     int i = 0;
-    while (i < LENGTH) {
-      System.out.print("번호? ");
-      no[i] = Integer.parseInt(keyboard.nextLine());
+    for (; i < no.length; i++) {
+      no[i] = getIntValue("번호?");
+      lectureName[i] = getStringValue("수업명? ");
+      description[i] = getStringValue("설명? ");
+      startDate[i] = getDateValue("시작일? ");
+      endDate[i] = getDateValue("종료일? ");
+      totalHours[i] = getIntValue("총수업시간? ");
+      dayHours[i] = getIntValue("일수업시간? ");
       
-      System.out.print("수업명? ");
-      title[i] = keyboard.nextLine();
-      
-      System.out.print("설명? ");
-      contents[i] = keyboard.nextLine();
-      
-      System.out.print("시작일? ");
-      startDate[i] = Date.valueOf(keyboard.nextLine());
-      
-      System.out.print("종료일? ");
-      endDate[i] = Date.valueOf(keyboard.nextLine());
-      
-      System.out.print("총수업시간? ");
-      totalHours[i] = Integer.parseInt(keyboard.nextLine());
-      
-      System.out.print("일수업시간? ");
-      dayHours[i] = Integer.parseInt(keyboard.nextLine());
-      
-      i++; // 배열의 인덱스를 증가시킨다.
-      
-      // 사용자가 입력한 값을 소문자로 변환한다.
-      System.out.print("\n계속 입력하시겠습니까?(Y/n) ");
-      String answer = keyboard.nextLine().toLowerCase();
-      
-      // 입력 값이 "Y", "y", "" 이 아니면, 입력을 종료한다. 
-      if (!answer.equals("y") && answer.length() > 0) {
-        break;
-      }
-
       System.out.println();
+      System.out.print("계속 입력하시겠습니까?(Y/n) ");
+      String response = keyScan.nextLine();
+      System.out.println();
+      
+      if (response.equals("n"))
+        break;
+      
     }
     
-    keyboard.close();
+    keyScan.close();
     
-    System.out.println(); // 빈 줄 출력
+    System.out.println();
     
-    // 배열에 입력한 개수만큼 출력한다.
-    for (int j = 0; j < i; j++) {
-      System.out.printf("%3d, %-15s, %10s ~ %10s, %4d\n", 
-          no[j], title[j], startDate[j], endDate[j], totalHours[j]);
+    for (int i2 = 0; i2 <= i; i2++) {
+      System.out.printf("%d, %s, %s ~ %s, %d\n", no[i2], lectureName[i2], startDate[i2],
+          endDate[i2], totalHours[i2]);
+    }
+    
+  }
+  
+  private static int getIntValue(String message) {
+    int value = 0;
+    while (true) {
+      try {
+        System.out.print(message);
+        return Integer.parseInt(keyScan.nextLine());
+      } catch (NumberFormatException e) {
+        System.out.println("숫자를 입력하세요.");
+      }
     }
   }
+  
+  private static String getStringValue(String message) {
+    System.out.print(message);
+    return keyScan.nextLine();
+  }
+  
+  private static Date getDateValue(String message) {
+    while (true) {
+      try {
+        System.out.print(message);
+        return Date.valueOf(keyScan.nextLine());
+      } catch (IllegalArgumentException e) {
+        System.out.println("2019-07-05 형식으로 입력하세요.");
+      }
+    }
+  }
+  
 }

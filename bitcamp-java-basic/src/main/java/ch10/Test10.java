@@ -19,6 +19,7 @@ class Monitor8 {
     // LCD의 불을 밝힌다.
     System.out.println("화면을 출력한다.");
   }
+
 }
 
 public class Test10 {
@@ -30,6 +31,7 @@ public class Test10 {
     
     // 존재하는 생성자를 지정해야 하고, 그 생성자의 파라미터에 맞춰 값을 넘겨야 한다.
     // => Monitor8 설계도에 따라 인스턴스를 생성한 후, int 값 두 개를 받는 생성자를 호출하라는 의미다.
+    // 생성자가 원하는 타입의 원하는 개수 의 값을 줘야한다 . 
     new Monitor8(50, 50); // OK!
   }
 }

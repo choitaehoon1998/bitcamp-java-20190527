@@ -1,19 +1,40 @@
-// 인스턴스 필드의 초기화 - 생성자를 통해 필드를 초기화 하기 
+// 인스턴스 필드의 초기화 - 생성자를 통해 필드를 초기화 하기
 package ch10;
 
 class Monitor4 {
-  int bright; // 밝기 (0% ~ 100%)
-  int contrast; // 명암 (0% ~ 100%)
-  int widthRes; // 해상도 너비
-  int heightRes; // 해상도 높이
-  
+  int bright = 10; // 밝기 (0% ~ 100%)
+  int contrast = 10; // 명암 (0% ~ 100%)
+  int widthRes = 480; // 해상도 너비
+  int heightRes = 320; // 해상도 높이
+
+  {
+    System.out.println("인스턴스 초기화 블록 실행");
+    bright = 20;
+    contrast = 20;
+    widthRes = 800;
+    heightRes = 600;
+  }
+  //호출된 생성자는 new 명령어 에서 지정한다
+  // 예) new 클래스명(호출할 생성자의 전달할 파리미터 값 )
+  // 다음과같이 파리미터의 값을 주지않으면 파라미터 값을 안받는 생성자가 호출된다 . 
+  // 예) Monior4()
+  // => 파리미터 값을 안받는 생성자 (파리미터가 없는 생성자) 를 기본  생성자(default constructor)라 부른다 
+  // => new 명령을 실행하여 인스턴스를 생성할때는 반드시 호출될 생성자를 지정해야한다 . 
+  // 예) new 클래스명() ;
+  // => 다음과같이 생성자를 지정하지않으면 컴파일 오류가 발생한다 
+  // => 예) new 클래스명;
   Monitor4() { // 생성자 <== 파라미터를 받지 않는 생성자를 기본 생성자(default constructor)라 부른다.
+   System.out.println("생성자실행");
     this.bright = 50;
     this.contrast = 50;
     this.widthRes = 1920;
     this.heightRes = 1080;
   }
-  
+  // 인스턴스 초기화 블럭이있는데 굳이 생성자가 필요한가?
+  // - 생성자는 외부에서 초기화 시킬 값을 받을수있다. 
+  // - 다만 현재의 생성자는 기본 생성자로서 외부로부터 값을 받지않기때문에 
+  // - 초기화 블럭이랑 다를 바가없다 . 
+
   void display() {
     System.out.println("----------------------------------");
     System.out.printf("밝기(%d)\n", this.bright);
@@ -23,34 +44,34 @@ class Monitor4 {
   }
 }
 
+
 public class Test06 {
   public static void main(String[] args) {
     // 모니터 인스턴스 생성
+    //1) Monitor4 설계도에 따라 인스턴스 필드를 Heap 에 생성한다 . 
+    //2) 필드의 초기화 문장을 실행한다 . 
+    // 예) int bright = 40; 
+    //3) 인스턴스 초기화 블록을 실행한다 . 
+    // 예) 
+    // { 
+    //  system.out.println("인스턴스 초기화 블록 실행")
+    //  ...
+    //  }
+    // 4) 파리미터를 안받는 생성자(default constructor)를 호출한다 
+    // 예) Monitor4() {....}
     Monitor4 m1 = new Monitor4();
-    
-    // 인스턴스 필드의 값이 생성자를 통해 유효한 기본 값들로 
+    //다음과 같이 호출할 생성자를 지정하지않는다면 컴파일 오류가 발생한다 .
+    // 반드시 존재하는 생성자를 지정해야한디 Monitor m2 = new Monitor4;
+
+    // 인스턴스 필드의 값이 생성자를 통해 유효한 기본 값들로
     // 미리 초기화 되었기 때문에 바로 사용할 수 있다.
-    m1.display(); 
-    
+    m1.display();
+
     // 물론 특정 속성의 값을 바꾼 후에 사용해도 된다.
     m1.bright = 40;
-    
+
     m1.display();
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

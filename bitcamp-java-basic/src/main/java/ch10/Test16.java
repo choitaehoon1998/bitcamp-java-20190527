@@ -15,7 +15,6 @@ public class Test16 {
     c1 = Calendar.getInstance();
     
     System.out.println(c1.get(Calendar.YEAR));
-    
     /* 
      # 팩토리 메서드(factory method)
      - GoF(Gang of Four)의 23가지 디자인 패턴(design pattern) 중 하나이다. 

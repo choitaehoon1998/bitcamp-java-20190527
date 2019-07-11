@@ -11,6 +11,14 @@ class My1 {
 
 public class Test01 {
   public static void main(String[] args) {
+//    My1 obj1; 래퍼런스만 형성될때는 my1이 불러지지안흔다 
+//    //이상태에서는 여기서 메모리에 my1 이불러진다
+//    obj1 = new My1();
+    
+    
+    
+    
+    //이상태에서는 여기서 메모리에 my1 이불러진다 
     My1 obj1 = new My1();
     My1 obj2 = new My1();
     My1 obj3 = new My1();
