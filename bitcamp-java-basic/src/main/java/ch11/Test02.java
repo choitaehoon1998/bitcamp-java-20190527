@@ -4,8 +4,10 @@ package ch11;
 public class Test02 {
   public static void main(String[] args) {
     
-    String s1;
-    s1 = "Hello"; // => new String("Hello") => 스트링 상수풀에 생성
+    String s2 = new String ("Hello");
+    
+     
+     String s1 = "Hello"; // => new String("Hello") => 스트링 상수풀에 생성
     // String 레퍼런스에 문자열 리터럴을 할당하면 내부적으로 다음 코드로 바뀐다.
     //    s1 = new String("Hello");
     // 단 리터럴(값을 직접 작성한 것)로 String 인스턴스를 만들 때는 
@@ -16,7 +18,7 @@ public class Test02 {
     // 그래서 같은 문자열을 가진 인스턴스를 생성하지 않는다.
     //
     
-    String s2 = "Hello"; // 이미 같은 문자열을 가진 인스턴스가 있기 때문에 기존 인스턴스 주소를 리턴.
+    //String s2 = "Hello"; // 이미 같은 문자열을 가진 인스턴스가 있기 때문에 기존 인스턴스 주소를 리턴.
                          // 왜? 메모리가 절약된다!
     
     if (s1 == s2)
