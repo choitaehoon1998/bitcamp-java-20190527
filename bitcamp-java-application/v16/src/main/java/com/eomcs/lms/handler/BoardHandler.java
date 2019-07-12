@@ -28,13 +28,13 @@ public class BoardHandler {
   }
 
   public void listBoard() {
-    Board [] boards = boardlist.toArray();
-    
-    for(Board board : boards) {
-    
+    Board[] boards = boardlist.toArray();
 
-      System.out.printf("%s ,%s,%s,%s \n", board.getNo(), board.getContents(), board.getCreatedDate(),
-          board.getViewCount());
+    for (Board board : boards) {
+
+
+      System.out.printf("%s ,%s,%s,%s \n", board.getNo(), board.getContents(),
+          board.getCreatedDate(), board.getViewCount());
     }
   }
 

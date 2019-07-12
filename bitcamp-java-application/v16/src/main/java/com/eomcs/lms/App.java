@@ -12,20 +12,20 @@ public class App {
   static Scanner keyScan;
 
   public static void main(String[] args) {
-    
+
     keyScan = new Scanner(System.in);
-    // input 생성자를 통해 input이 의존하는 객체인 scanner 를 주입한다 
+    // input 생성자를 통해 input이 의존하는 객체인 scanner 를 주입한다
     Input input = new Input(keyScan);
     // 각 핸들러의 생성자를 통해 의존객체 input 을 주입한다
-    // => 이렇게 어떤객체가 필요로 하는 의존객체를 주입하는것을 
+    // => 이렇게 어떤객체가 필요로 하는 의존객체를 주입하는것을
     // 의존성주입(dependency injection : di ) 라고한다.
     // =>di를 전문적으로 관리해주는 프레임워크가 있으니 그이름도 유명한
     // spring ioc 컨테이너 !
-    LessonHandler lessonHandler =new LessonHandler(input); 
+    LessonHandler lessonHandler = new LessonHandler(input);
     MemberHandler memberHandler = new MemberHandler(input);
     BoardHandler boardHandler = new BoardHandler(input);
     BoardHandler boardHandler2 = new BoardHandler(input);
-    
+
     while (true) {
       String command = prompt();
       if (command.equals("quit")) {

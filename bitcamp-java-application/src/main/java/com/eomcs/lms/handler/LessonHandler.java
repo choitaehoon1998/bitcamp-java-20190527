@@ -4,12 +4,13 @@ import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.util.Input;
 
 public class LessonHandler {
-  private LessonList lessonlist =new LessonList();
+  private LessonList lessonlist = new LessonList();
   private Input input;
 
- public LessonHandler(Input input){
-    this.input =input;
+  public LessonHandler(Input input) {
+    this.input = input;
   }
+
   public void addLesson() {
     // 수업 데이터를 저장할 메모리는 Lesson 설계도에 따라 만든다.
     Lesson lesson = new Lesson();
@@ -24,20 +25,20 @@ public class LessonHandler {
     lesson.setDayHours(input.getIntValue("일수업시간? "));
 
     // 수업 데이터를 저장하고 있는 인스턴스의 주소를 레퍼런스 배열에 저장한다.
-    // LessonHandler 에서 데이터를 저장하지않고 LessonList 에 전달한다 
+    // LessonHandler 에서 데이터를 저장하지않고 LessonList 에 전달한다
     lessonlist.add(lesson);
 
     System.out.println("저장하였습니다.");
   }
 
   public void listLesson() {
-    Lesson[] lessons = lessonlist.toArray(); 
-    for (Lesson  lesson : lessons) {
+    Lesson[] lessons = lessonlist.toArray();
+    for (Lesson lesson : lessons) {
       // 레퍼런스 배열에서 한 개의 인스턴스 주소를 꺼낸다.
-     
+
       // 그 인스턴스 주소로 찾아가서 인스턴스의 각 변수 값을 꺼내 출력한다.
-      System.out.printf("%d, %s, %s ~ %s, %d\n", lesson.getNo(), lesson.getTitle(), lesson.getStartDate(),
-          lesson.getEndDate(), lesson.getTotalHours());
+      System.out.printf("%d, %s, %s ~ %s, %d\n", lesson.getNo(), lesson.getTitle(),
+          lesson.getStartDate(), lesson.getEndDate(), lesson.getTotalHours());
     }
   }
 
