@@ -1,6 +1,6 @@
 package ch13.f;
 
-public class X {
+public class X extends Object {
   private int v1 = 100;
   
   public X(int value) { 

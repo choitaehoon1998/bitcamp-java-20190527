@@ -19,8 +19,7 @@ public class Test03 {
     //c2 = new Car(); // 상위 타입의 인스턴스를 가리킬 수 없다.
     //c2 = new Truck(); // 물론 상속 관계가 없는 다른 타입을 인스턴스도 가리킬 수 없다.
     //c2 = new DumpTruck();
-    //c2 = new PickupTruck();
-    
+    //c2 = new PickupTruck();    
   }
 
 }

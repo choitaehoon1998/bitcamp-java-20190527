@@ -30,7 +30,7 @@ public class Test11 {
     // => valuesOf() 메서드는 같은 값을 갖는 인스턴스가 이미 있다면 
     //    새로 만들지 않고 기존 객체를 리턴한다.
     
-    Integer obj3 = Integer.valueOf(100);
+    Integer obj3 = Integer.valueOf(100); //상수풀에 생성된다 . 
     Integer obj4 = Integer.valueOf(100);
     
     // 이제 두 객체의 값을 비교할 때 equals()를 사용하지 않고 
@@ -41,6 +41,14 @@ public class Test11 {
       System.out.println("obj3 == obj4");
     else 
       System.out.println("obj3 != obj4");
+    //오토박싱인경우 인스턴스의 주소는?
+      Integer obj5 =100;
+    Integer obj6 =100;
+    if(obj5==obj6)
+    System.out.println(obj5==obj6);
+    else
+    System.out.println(obj5!=obj5);
+        
   }
 }
 
