@@ -75,14 +75,20 @@ public class App {
       }else if (command.equals("/board/detail")) {
         boardHandler.detailBoard();
 
+      } else if (command.equals("/board/update")) {
+        boardHandler.updateBoard();
+
       } else if (command.equals("/board/delete")) {
         boardHandler.deleteBoard();
 
-      } else if (command.equals("/board2/add")) {
+      }else if (command.equals("/board2/add")) {
         boardHandler2.addBoard();
 
       } else if (command.equals("/board2/list")) {
         boardHandler2.listBoard();
+
+      }else if (command.equals("/board2/update")) {
+        boardHandler2.updateBoard();
 
       }else if (command.equals("/board2/detail")) {
         boardHandler2.detailBoard();

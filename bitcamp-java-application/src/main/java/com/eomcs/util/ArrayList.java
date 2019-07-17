@@ -46,7 +46,6 @@ public class ArrayList<E> {
       a[size] = null;
     return a;
   }
-
   public int size() {
     return this.size;
   }
@@ -90,21 +89,21 @@ public class ArrayList<E> {
     return old;
   }
 
-  public static void main(String[] args) {
-    ArrayList<String> list = new ArrayList<>();
-
-    list.add("000");
-    list.add("111");
-    list.add("222");
-    list.add("333");
-    list.add("444");
-    list.add("555");
-    String old = list.remove(30);
-    // System.out.println(old);
-    for (int i = 0; i < list.size; i++) {
-      System.out.println(list.get(i));
-    }
-  }
+//  public static void main(String[] args) {
+//    ArrayList<String> list = new ArrayList<>();
+//
+//    list.add("000");
+//    list.add("111");
+//    list.add("222");
+//    list.add("333");
+//    list.add("444");
+//    list.add("555");
+//    String old = list.remove(30);
+//    // System.out.println(old);
+//    for (int i = 0; i < list.size; i++) {
+//      System.out.println(list.get(i));
+//    }
+//  }
 
 }
 

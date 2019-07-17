@@ -1,8 +1,6 @@
 // 제네릭(generic) 응용 - 클래스 전체에 응용하기
 package ch16;
 
-import java.io.File;
-import java.util.Calendar;
 import java.util.Date;
 
 // 제네릭을 적용하지 않은 클래스
@@ -19,7 +17,7 @@ class Box1 {
 }
 
 // 제네릭을 적용한 클래스
-// => 클래스 전체에서 사용할 타입 파라미터를 선언하기
+// => 클래스 전체에서 사용할 타입 파라미터(타입이름을 저장하는 변수 )를 선언하기
 // =>   class 클래스명<타입파라미터명, 타입파라미터명, ...> {...}
 // => 클래스가 다루는 어떤 타입이 있다고 가정하자. 그 타입을 T라고 부르겠다.
 //    
@@ -38,7 +36,6 @@ class Box2<T> {
 
 public class Test04 {
   public static void main(String[] args) {
-    
     // 제네릭이 적용되지 않은 Box1 클래스 이용
     Box1 b1 = new Box1(100); // <= Integer.valueOf(100)
     Box1 b2 = new Box1("Hello");

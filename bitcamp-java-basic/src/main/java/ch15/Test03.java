@@ -20,7 +20,6 @@ public class Test03 {
     obj1.name = "홍길동";
     obj1.age = 20;
     System.out.println(obj1.toString());
-    
     // println()의 파라미터 값으로 문자열을 넘겨주지 않으면,
     // println() 내부에서 파라미터로 넘어온 객체에 대해 toString() 호출한 후 
     // 그 리턴 값을 출력한다.
