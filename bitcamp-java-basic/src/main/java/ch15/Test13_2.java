@@ -30,6 +30,7 @@ public class Test13_2 {
       
     }
     public Engine clone() throws CloneNotSupportedException {
+     
       return (Engine) super.clone();
     }
     @Override
@@ -77,11 +78,14 @@ public class Test13_2 {
     public Car clone() throws CloneNotSupportedException {
       //deep copy 
       //=> 포함하고있는 하위객체애대한 복제를 수행하라면  다음과같이 개발자가 직접 코드를 작성해야한다 
-     
+      
       Car copy = (Car) super.clone();
+      
       copy.engine = this.engine.clone();
       
+     
       return (Car) super.clone();
+      
     }
   }
 
@@ -95,7 +99,7 @@ public class Test13_2 {
     System.out.println(car);
     System.out.println(car2);
     System.out.println(car.engine==car2.engine);
-    
+    System.out.println(car.name==car2.name);
     // clone 은 해당 객체 의 피륻값만 복제한다 
     // 그객체가 포함하고있는 하위 객체는복제하지앟ㄴ는다
     // shallow copy 라 부른다

@@ -11,7 +11,6 @@ class My1 /* extends Object */ {
 public class Test01 {
 
   public static void main(String[] args) {
-
     // instanceof 연산자를 사용하여 해당 인스턴스가 Object 타입인지 확인해 보자.
     // instanceof 연산자?
     // => 레퍼런스가 가리키는 인스턴스가 지정한 클래스를 인스턴스 이거나 또는 조상으로 갖는지 검사한다.

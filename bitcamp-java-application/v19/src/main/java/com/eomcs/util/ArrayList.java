@@ -29,7 +29,7 @@ public class ArrayList<E> {
   }
 
   public Object[] toArray() {
-    return Arrays.copyOf(list, size); // new Object [this.size]// 새로 배열을생성하기 때문에 원래것과 비교하면 주소값이 다르다 
+    return Arrays.copyOf(list, size); // new Object [this.size]// 새로 배열을생성하기 때문에 원래것과 비교하면 주소값이 다르다
   }
 
 
@@ -41,7 +41,7 @@ public class ArrayList<E> {
       return (E[]) Arrays.copyOf(list, size, a.getClass());// 세번째 파리미터로 지정된 타입의 배열이 생성된다 .
                                                            // (지정 x 시 오브젝트로만듬 )
     }
-    System.arraycopy(list, 0, a, 0, size);//새로 배열을 생성하는것이아니라 복사하는것이기때문에 주소값도 같다 . 
+    System.arraycopy(list, 0, a, 0, size);// 새로 배열을 생성하는것이아니라 복사하는것이기때문에 주소값도 같다 .
     if (a.length > size)
       a[size] = null;
     return a;
@@ -82,11 +82,11 @@ public class ArrayList<E> {
      * 
      * list[--size] = null;
      */
-    //방법2
+    // 방법2
     System.arraycopy(list, index + 1, list, index, size - (index + 1));
-    //삭제한후 기존의 맨끝값이 들어있던 방을 null로 설정한다 .
-    //-> 래퍼런스가 남아있지 않게 하여 가비지가 정상적으로 이뤄지도록한다 . 
-    list[--size]=null;
+    // 삭제한후 기존의 맨끝값이 들어있던 방을 null로 설정한다 .
+    // -> 래퍼런스가 남아있지 않게 하여 가비지가 정상적으로 이뤄지도록한다 .
+    list[--size] = null;
     return old;
   }
 

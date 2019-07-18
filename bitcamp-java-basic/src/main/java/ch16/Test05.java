@@ -13,7 +13,7 @@ public class Test05 {
     System.out.println(strs.length);
 
     // 내부에서 생성할 배열 크기 보다 더 큰 배열을 파라미터로 넘긴다면?
-    // copyOf() 그래도 새 크기에 맞춰 새 배열을 생성한다.
+    // copyOf() 그래도 새 크기에 맞춰 새 배열을 생성한다. 
     String[] temp = new String[100];
     String[] strs2 = create2(temp);
     System.out.println(strs2.length);
@@ -50,7 +50,7 @@ public class Test05 {
   static <T> T[] create4(T[] arr) {
     // copyOf(original, newLength)
     // => 원래 배열(original)과 같은 타입의 배열을 배열크기(newLength)에 맞춰 새로 생성한다.
-    return (T[]) Array.newInstance(arr.getClass(), 10);
+    return (T[]) Array.newInstance(arr.getClass().getComponentType(), 10);
   }
 
 }
