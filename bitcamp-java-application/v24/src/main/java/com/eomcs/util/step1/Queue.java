@@ -1,7 +1,10 @@
 // 상속 문법을 이용하여 스택 만들기
-package com.eomcs.util;
+package com.eomcs.util.step1;
 
-public class Queue<E> extends LinkedList<E> implements Cloneable ,Iterable<E> {
+import com.eomcs.util.Iterator;
+import com.eomcs.util.LinkedList;
+
+public class Queue<E> extends LinkedList<E> implements Cloneable  {
 
 
   @Override
@@ -29,25 +32,9 @@ public class Queue<E> extends LinkedList<E> implements Cloneable ,Iterable<E> {
   public boolean empty() {
     return size() == 0;
   }
-
-
-
-  @Override
-  public Iterator<E> iterator() {
-    return new Iterator<E>() {
-      public boolean hasNext() {
-        return size > 0;
-      }
-
-      @Override
-      public E Next() {
-        return poll();
-      }
-
-    };
+  //큐의 데이터를 꺼내줄 이터레이터를 제공한다
+  public Iterator<E> createIterator(){
+    return new QueueIterator<E>(this);
   }
-
-
-
 
 }
