@@ -1,5 +1,5 @@
-// Linked List :목록으로 다루는 값을 특정 타입으로 제한하기 위해 제네릭 적용하기 .
-package algorithm.data_structure.stack.step3;
+// Linked List :목록으로 다루는 값을 특정 타입으로 제한하기 위해 제네릭 적용하기 . 
+package com.eomcs.util;
 
 import java.lang.reflect.Array;
 
@@ -47,7 +47,7 @@ public class LinkedList<T> {
   public T set(int index, T value) {
     if (index < 0 || index >= size)
       throw new IndexOutOfBoundsException("인덱스 범위초과");
-    Node<T> node = head;
+    Node <T> node = head;
     for (int i = 0; i < index; i++) {
       node = node.next;
     }
@@ -117,7 +117,7 @@ public class LinkedList<T> {
 
   public Object[] toArray2() {
     Object[] obarr = new Object[size];
-    Node<T> copyNode = head;
+    Node<T>copyNode = head;
     int i = 0;
     while (i != size) {
       obarr[i++] = copyNode.value;
@@ -126,7 +126,6 @@ public class LinkedList<T> {
     }
     return obarr;
   }
-
   @SuppressWarnings("unchecked")
   public T[] toArray(T[] a) {
     if (a.length < size) {
@@ -134,9 +133,9 @@ public class LinkedList<T> {
       // 이메서드에서 새배열을 만든다
       a = (T[]) Array.newInstance(a.getClass().getComponentType(), size);
       // 세번째 파리미터로 지정된 타입의 배열이 생성된다 .
-      // (지정 x 시 오브젝트로만듬 )
+                                                           // (지정 x 시 오브젝트로만듬 )
     }
-    // 새로 배열을 생성하는것이아니라 복사하는것이기때문에 주소값도 같다 .
+   //새로 배열을 생성하는것이아니라 복사하는것이기때문에 주소값도 같다 . 
     Node<T> copyNode = head;
     for (int i = 0; i < size; i++) {
       a[i] = copyNode.value;
@@ -146,8 +145,7 @@ public class LinkedList<T> {
       a[size] = null;
     return a;
   }
-
-  // Node 객체 에 보관하는 데이터의 클래스 이름을 "타입 파라미터" t에 받는다 .
+// Node 객체 에 보관하는 데이터의 클래스 이름을  "타입 파라미터" t에 받는다 . 
   static class Node<T> {
     T value;
     Node<T> next;
