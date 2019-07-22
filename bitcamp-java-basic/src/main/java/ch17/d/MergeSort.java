@@ -5,6 +5,17 @@ package ch17.d;
 // 그래서 Sorter 를 상속 받았다.
 //
 public class MergeSort extends Sorter {
+  
+  // sorter 클래스를 상속 받았지만 
+  // sorter 클래스의 sort() 메서드를 재정의 하지않았다.
+  // 아래의 sort(int[],int,int)메서드는 
+  // 내부적으로 사용하기위해 추가한 메서드이다.
+  // 이렇게 sorter 를 상속받아 서브 클래스를 만드는것에는 문제가없지만 . 
+  // 이클래스를 사용하는 쪽에서는 문제가 발생할것이다.
+  // 왜? 
+  //이클래스를 사용하는 쪽에서는 sorter 에서 정의한 
+  // sort()라는 메서드가 정렬을 수행할것이라고 믿기 때문이다 . 
+  
   //Merges two subarrays of arr[]. 
   // First subarray is arr[l..m] 
   // Second subarray is arr[m+1..r] 

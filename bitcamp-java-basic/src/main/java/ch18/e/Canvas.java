@@ -31,6 +31,10 @@ public class Canvas {
   }
   
   public void render(String contents) {
+    // 어떤 pen 인지 상관없이 
+    // pen 사용규칙에 따라 메서드를 호출한다 .
+    // ==> 클래스에 상관없이 일관된 방법으로 펜을 사용할수있어 유지보수에 좋다
+    // ==> 이것이 인터페이스를 사용하는 이유이다 . 
     tool.write(contents);
   }
 }
