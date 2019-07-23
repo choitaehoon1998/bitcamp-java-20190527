@@ -35,7 +35,7 @@ public class Test02 {
     System.out.println(list.get(2));
     
     // 인덱스가 유효하지 않을 때 IndexOutOfBoundsException 예외가 발생한다.
-    System.out.println(list.get(3));
+    System.out.println(list.get(100));
   }
 
 }

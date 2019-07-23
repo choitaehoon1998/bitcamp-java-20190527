@@ -40,9 +40,9 @@ public class Test06 {
   static abstract class Player4 {
     public abstract void play();
   }
-  
   public static void main(String[] args) {
     
+    //추상 메서드를 한개만 갖고있는 인터페이스에 대해 람다 문법으로 익명클래스를 만들수있따.
     Player p1 = () -> System.out.println("Player...");
     p1.play();
     

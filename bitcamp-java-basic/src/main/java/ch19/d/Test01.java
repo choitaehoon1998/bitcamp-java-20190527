@@ -1,5 +1,7 @@
-// static nested class를 응용하여 상수를 관리할 때 이점
+// static nested class 사용후 
 package ch19.d;
+
+import ch19.d.Category;
 
 public class Test01 {
 
@@ -23,7 +25,7 @@ public class Test01 {
     // => 이렇게 클래스 이름으로 필드처럼 사용할 수 있어 보기가 쉽다.
     //
     p.category = Category.computer.mouse.bluetooth;
-    
+    // p.category = Category.COMPUTER_MOUSE_BLUETOOTH; 예전 방식 
     // static nested class를 이런 식으로 적용한 대표적인 예가
     // 안드로이드 컴파일러가 자동 생성하는 R.java 이다.
     // 

@@ -35,7 +35,10 @@ public interface Printer {
   // => 디폴트 메서드를 작성할때 간단하게 코드를 작성할 수 있지만,
   // 클래스처럼 뭔가 진짜 일을 하는 코드를 작성하는것은 좋지않다.
   // 그냥 다음과같이 빈메서드를 만들라 . !
-  default void watermark(String title ) {};
+  default void watermark(String title ) {
+    System.out.println(title);
+    
+  };
   // 이메서드를 추가했다고 해서
   // 기존에 작성한 클래스(PaperPrinter, FilmPrinter)를 변경할 필요는 없다 .
   // 컴파일 오류가 발생하지않는다 .

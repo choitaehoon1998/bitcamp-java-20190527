@@ -2,6 +2,7 @@ package ch18.g3;
 
 import ch18.g2.FilmPrinter;
 import ch18.g2.PaperPrinter;
+import ch18.g2.Printer;
 
 public class Test01 {
   public static void main(String[] args) {
