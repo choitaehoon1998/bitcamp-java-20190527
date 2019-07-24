@@ -18,7 +18,7 @@ public class Test02 {
       
     } catch (Exception e) {
       // 예외가 발생한 메서드의 위치 정보를 콘솔에 자세하게 출력한다.
-      e.printStackTrace();
+      //e.printStackTrace();
       
     } finally {
       keyboard.close();
