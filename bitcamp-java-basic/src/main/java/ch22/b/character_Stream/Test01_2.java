@@ -5,12 +5,12 @@ import java.io.FileReader;
 
 public class Test01_2 {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception{
     
     // FileReader
     // => 문자 단위로 데이터를 읽는 일을 한다.
     //
-    try (FileReader in = new FileReader("data.txt")) {
+    FileReader in = new FileReader("data.txt");
       
       // UTF-8 코드 값을 읽어서 UTF-16 코드 값으로 변환한 다음에 리턴한다.
       //
@@ -40,10 +40,7 @@ public class Test01_2 {
       // 만약 이클립스에서 실행한다면 utf-8이라고 가정하고읽는다 
       // 만약 명령창 콘솔창에서 실행한다면 os에따라 다르게 읽는다 . 
       
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    
+      in.close();
     System.out.println("읽기 완료!");
   }
 

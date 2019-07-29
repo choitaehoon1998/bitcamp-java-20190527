@@ -4,10 +4,9 @@ package ch22.b.byte_Stream;
 import java.io.FileInputStream;
 
 public class Test03_2 {
-  public static void main(String[] args) {
+  public static void main(String[] args)throws Exception {
     
     // 파일의 바이너리 데이터를 읽어 배열에 저장한다.
-    try {
       FileInputStream in = new FileInputStream("data.bin");
       
       // 데이터를 저장할 바이트 배열을 준비한다.
@@ -32,9 +31,6 @@ public class Test03_2 {
       
       in.close();
       
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
     
     System.out.println("출력 완료!");
   }
