@@ -1,18 +1,19 @@
-// 버퍼없이 대량의 Primitvie 타입의 값을 출력하기
-package ch22.c.ex4;
+// DataOutputStream + BufferedInpuSTREAM 
+package ch22.c.ex4.byte_stream;
 
 import java.io.FileOutputStream;
 
-
-public class Test01_1 {
+public class Test02_1 {
   public static void main(String[] args) throws Exception {
-    
     //실제 파일에 출력을 수행하는 객체를 준비한다 . 
     FileOutputStream other= new FileOutputStream("temp/data.bin");
     
-    //파일을 출력하는 객체에 Primitive type 의값을 출력하는  데코레이터 객체를 붙인다. 
-    DataOutputStream out = new DataOutputStream(other);
+    //위 객체에 먼저 버퍼링 기능을 붙인다 . 
+    BufferedOutputStream other2 = new BufferedOutputStream(other);
 
+    //위 데코레이터 객체에 다시 PRIMITIVE 타입으 ㅣ값을 출력하는 데코레이터 객체를 붙이낟
+     DataOutputStream out = new DataOutputStream(other2);
+    
     short s = 0x1122;
     int i = 0x33445566;
     long l = 0x1122334455667788L;
@@ -27,10 +28,10 @@ public class Test01_1 {
       out.writeLong(l);
       out.writeUTF(str);
       out.writeBoolean(b);
-
-      
-
     }
+    
+    //버퍼기능을 사용할때는 항상 맨마지막에 잔여 데이터를 출력해야한다 . 
+    out.flush();
     long end = System.currentTimeMillis();
     System.out.println(end-start);
     System.out.println("출력 완료!");

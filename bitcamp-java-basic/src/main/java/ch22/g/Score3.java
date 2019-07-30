@@ -6,12 +6,12 @@ import java.io.Serializable;
 // setter를 제거한다.
 public class Score3 implements Serializable {
   private static final long serialVersionUID = 1L;
-  
+
   private String name;
   private int kor;
   private int eng;
   private int math;
-  
+
   // serialize 대상에서 제외할 필드는 transient로 선언한다.
   transient private int sum;
   transient private float aver;

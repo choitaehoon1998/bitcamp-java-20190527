@@ -40,7 +40,7 @@ public class BufferedDataInputStream extends BufferedInputStream {
   }
 
   public boolean readBoolean() throws IOException {
-    return read() == 0 ? true : false;
+    return read() == 1 ? true : false;
   }
 
   public String readUTF() throws IOException {

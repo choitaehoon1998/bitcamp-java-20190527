@@ -1,4 +1,4 @@
-// Serialize - Serializable 구현체의 인스턴스를 출력하기
+// 인스턴스 출력  - Serializable 구현체의 인스턴스를 출력하기
 package ch22.f;
 
 import java.io.FileOutputStream;
@@ -6,9 +6,9 @@ import java.io.ObjectOutputStream;
 
 public class Test2_1 {
 
-  public static void main(String[] args) {
-    try (ObjectOutputStream out = new ObjectOutputStream(
-          new FileOutputStream("score2.data"))) {
+  public static void main(String[] args)throws Exception  {
+    FileOutputStream out0 = new FileOutputStream("temp/score.data");
+    ObjectOutputStream out = new ObjectOutputStream(out0);
       
       // 인스턴스 출력하기
       
@@ -19,12 +19,9 @@ public class Test2_1 {
       //    이 클래스를 실행하라!
       // 
       out.writeObject(new Score2("홍길동", 100, 100, 100));
-      
+      out.close();
       System.out.println("출력 완료!");
       
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
 
   }
 

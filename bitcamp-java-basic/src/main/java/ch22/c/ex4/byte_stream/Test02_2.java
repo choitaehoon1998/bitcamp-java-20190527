@@ -1,5 +1,5 @@
 // DataInputStream에 버퍼기능을 추가하여 DataInputStream2 만들기
-package ch22.c.ex4;
+package ch22.c.ex4.byte_stream;
 
 import java.io.FileInputStream;
 
