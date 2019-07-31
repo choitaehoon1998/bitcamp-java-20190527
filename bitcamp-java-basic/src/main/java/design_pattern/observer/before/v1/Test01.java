@@ -1,5 +1,4 @@
-//v1 : 옵저버 등록전  : 기본기능만 사용하는경우 
-package design_pattern.observer.after;
+package design_pattern.observer.before.v1;
 
 public class Test01 {
 
