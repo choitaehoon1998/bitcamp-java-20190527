@@ -15,7 +15,7 @@ public class TextAnalyzer {
       int count = 0;
       int totalLine = 0;
       int totlaLineComment = 0;
-      boolean startLineComment = false;
+      boolean startLineComment = true;
       int countSlash = 0;
       boolean isEmpty = true;
       while ((ch = in.read()) != -1) {
@@ -26,7 +26,7 @@ public class TextAnalyzer {
         } else {
           isEmpty = false;
         }
-        if (!startLineComment) {
+        if (startLineComment) {
           if (ch == '/') {
             if (countSlash == 0) {
               countSlash++;
@@ -42,6 +42,7 @@ public class TextAnalyzer {
         }
       }
       if (!isEmpty)
+        
         totalLine++;
       System.out.printf("총 읽은 문자수 : %d\n", count);
       System.out.printf("총 줄수  : %d\n", totalLine);
