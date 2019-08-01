@@ -1,11 +1,14 @@
 // v32_6: 회원 데이터를 다루는 CRUD 명령을 처리한다 . 
 package com.eomcs.lms;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Scanner;
 import com.eomcs.lms.domain.Member;
 
 public class ServerApp {
@@ -41,6 +44,12 @@ public class ServerApp {
             case"/member/add":
              addmember();
              break;
+            case"/member/update":
+              updatemember();
+              break;
+            case"/member/delete":
+              deletemember();
+              break;
             case"/member/list":
               listmember();
               break;
@@ -64,6 +73,26 @@ public class ServerApp {
     System.out.println("서버 종료 ");
   }
   
+ 
+
+  private static void deletemember() throws IOException {
+    memberList.remove(in.readInt());
+    out.writeObject(memberList);
+    out.flush();
+    out.writeUTF("ok");
+    out.flush();
+  }
+
+
+
+  private static void updatemember() throws Exception {
+    out.writeUTF("ok");
+   
+    
+  }
+
+
+
   private static void addmember()throws Exception {
     Member member = (Member)in.readObject();
     memberList.add(member);

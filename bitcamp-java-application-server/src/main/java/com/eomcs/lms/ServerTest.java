@@ -59,10 +59,17 @@ public class ServerTest {
       if(!delete()) {
         error();
       }
+      System.out.println("---------------"); 
+      if(!update()) {
+        error();
+      }
+    
       System.out.println("---------------");
       if(!quit()) {
         error();
       }
+      System.out.println("---------------");
+     
       System.out.println("---------------");
     } catch (RequestException e) {
       // 서버에서 요청처리에 실패했다면
@@ -89,23 +96,37 @@ public class ServerTest {
     System.out.println("처리 완료");
     return true;
   }
+  
+  @SuppressWarnings("unchecked")
   private static boolean delete()throws Exception {
-    out.writeUTF("delete");
+    
+    out.writeUTF("/member/delete");
     out.flush();
-    System.out.print("delete 요청함===> ");
-    // 서버가 보낸 데이터를 읽는다
-
+    out.writeInt(1);
+    out.flush();
+    
     if(!in.readUTF().equals("ok"))
       return false;
-
     System.out.println("처리 완료");
+    List<Member>memberList=(List<Member>)in.readObject();
+    System.out.println(memberList.get(0).getNo());
     return true;
-  }
+  
+    }
   private static boolean add (Member m)throws  Exception{
     out.writeUTF("/member/add");
     out.writeObject(m);
     out.flush();
     System.out.print("add 요청함 ===>");
+    if(!in.readUTF().equals("ok"))
+      return false;
+    System.out.println("처리 완료");
+    return true;
+  }
+  private static boolean update()throws Exception{
+    out.writeUTF("/member/update");
+    out.flush();
+    System.out.println("update 요청함 ===>");
     if(!in.readUTF().equals("ok"))
       return false;
     System.out.println("처리 완료");
