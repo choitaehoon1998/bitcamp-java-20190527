@@ -1,8 +1,14 @@
-package com.eomcs.lms;
+package com.eomcs.lms.servlet;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import com.eomcs.lms.Servlet;
 import com.eomcs.lms.domain.Lesson;
 
 // 게시물 요청을 처리하는 담당자
@@ -11,10 +17,47 @@ public class LessonServlet implements Servlet {
   ObjectInputStream in;
   ObjectOutputStream out;
 
-  public LessonServlet(ObjectInputStream in, ObjectOutputStream out) {
+  public LessonServlet(ObjectInputStream in, ObjectOutputStream out) throws ClassNotFoundException {
     this.in = in;
     this.out = out;
+    
+    try {
+      loadData();
+    } catch (IOException e) {
+      e.printStackTrace();
+      System.out.println("수업 데이터 로딩 중 오류발생");
+    }
+
   }
+  @SuppressWarnings("unchecked")
+  private void loadData() throws IOException, ClassNotFoundException {
+    File file = new File("./lesson.ser");
+
+    try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
+      lessonList = (ArrayList<Lesson>) in.readObject();
+      System.out.println("수업 데이터 로딩완료");
+    }
+  }
+
+  public void saveData() {
+
+    File file = new File("./lesson.ser");
+
+
+    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
+      out.writeObject(lessonList);
+      System.out.println("수업 데이터 저장완료");
+
+    } catch (FileNotFoundException e) {
+      System.out.println("파일을 생성할 수 없습니다!");
+
+    } catch (IOException e) {
+      System.out.println("파일에 데이터를 출력하는 중에 오류 발생!");
+      e.printStackTrace();
+
+    }
+  }
+
 
   @Override
   public void service(String command) throws Exception {

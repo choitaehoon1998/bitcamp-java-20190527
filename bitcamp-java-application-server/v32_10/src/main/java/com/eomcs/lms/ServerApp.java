@@ -1,4 +1,4 @@
-// v32_11 :Servlet 클래스에서 파일 데이터 저장 기능을 별도의 클래스(Dao)로 분리하기 
+// v32_10 :파일 저장기능 추가
 package com.eomcs.lms;
 
 import java.io.ObjectInputStream;
@@ -21,15 +21,11 @@ public class ServerApp {
       try (Socket clientSocket = serverSocket.accept();
           ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
           ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream())) {
-       
         System.out.println("클라이언트와 연결되었음");
-        
         // 다른 메서드가 사용할수있도록 입출력 스트림을 스태틱 변수에 저장한다
-        
         BoardServlet boardServlet = new BoardServlet(in, out);
         LessonServlet lessonServlet = new LessonServlet(in, out);
         MemberServlet memberServlet = new MemberServlet(in, out);
-        
         while (true) {
           // 클라이언트가 보낸 명령을 읽는다
           String command = in.readUTF();
