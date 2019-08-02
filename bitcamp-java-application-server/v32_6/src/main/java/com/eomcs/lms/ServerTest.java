@@ -170,7 +170,7 @@ public class ServerTest {
 
     System.out.println("처리 완료");
     return true; 
-  }
+    }
 
   private static boolean list ()throws  Exception{
     out.writeUTF("/member/list");
