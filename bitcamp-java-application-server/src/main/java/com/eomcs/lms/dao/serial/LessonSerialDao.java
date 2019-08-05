@@ -1,11 +1,12 @@
-package com.eomcs.lms.dao;
+package com.eomcs.lms.dao.serial;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
 
-public class LessonSerialDao extends AbstractDataSerializer<Lesson, Integer> {
+public class LessonSerialDao extends AbstractDataSerializer<Lesson, Integer> implements LessonDao{
   
   public LessonSerialDao(String file) throws ClassNotFoundException {
     super(file);
@@ -46,16 +47,16 @@ public class LessonSerialDao extends AbstractDataSerializer<Lesson, Integer> {
     }
     
   }
-  
+  @Override
   public int insert(Lesson lesson) throws Exception {
     list.add(lesson);
     return 1;
   }
-  
+  @Override
   public List<Lesson> findAll() throws Exception {
     return list;
   }
-  
+  @Override
   public Lesson findBy(int no) throws Exception {
     int index = indexOf(no);
     if (index == -1)
@@ -70,7 +71,7 @@ public class LessonSerialDao extends AbstractDataSerializer<Lesson, Integer> {
     list.set(index, lesson);
     return 1;
   }
-  
+  @Override
   public int delete(int no) throws Exception {
     int index = indexOf(no);
     if (index == -1)

@@ -1,11 +1,12 @@
-package com.eomcs.lms.dao;
+package com.eomcs.lms.dao.serial;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import com.eomcs.lms.dao.BoardDao;
 import com.eomcs.lms.domain.Board;
 
-public class BoardSerialDao extends AbstractDataSerializer<Board,Integer> {
+public class BoardSerialDao extends AbstractDataSerializer<Board,Integer> implements BoardDao{
   
   public BoardSerialDao(String file) throws ClassNotFoundException {
     super(file);
@@ -46,23 +47,23 @@ public class BoardSerialDao extends AbstractDataSerializer<Board,Integer> {
     }
     return -1;
   }
-  
+  @Override
   public int insert(Board board) throws Exception {
     list.add(board);
     return 1;
   }
-  
+  @Override
   public List<Board> findAll() throws Exception {
     return list;
   }
-  
+  @Override
   public Board findBy(int no) throws Exception {
     int index = indexOf(no);
     if (index == -1)
       return null;
     return list.get(index);
   }
-  
+  @Override
   public int update(Board board) throws Exception{
     int index = indexOf(board.getNo());
     if (index == -1)
@@ -70,7 +71,7 @@ public class BoardSerialDao extends AbstractDataSerializer<Board,Integer> {
     list.set(index, board);
     return 1;
   }
-  
+  @Override
   public int delete(int no) throws Exception {
     int index = indexOf(no);
     if (index == -1)
