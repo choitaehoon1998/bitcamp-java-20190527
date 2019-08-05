@@ -1,47 +1,36 @@
-// v32_16 : 옵저버 패턴을 적용하여 서버를 시작할때 데이터로딩 , 서버를 종료할때 데이터저장을 수행하자 
+// v32_15 : 서블릿에서 DAO 를 쉽게 교체할수있도록 외부에서 주입하라 
 package com.eomcs.lms;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
-import com.eomcs.lms.context.ServletContextListener;
-import com.eomcs.lms.dao.BoardDao;
-import com.eomcs.lms.dao.LessonDao;
-import com.eomcs.lms.dao.MemberDao;
+import com.eomcs.lms.dao.serial.BoardSerialDao;
+import com.eomcs.lms.dao.serial.LessonSerialDao;
+import com.eomcs.lms.dao.serial.MemberSerialDao;
 import com.eomcs.lms.servlet.BoardServlet;
 import com.eomcs.lms.servlet.LessonServlet;
 import com.eomcs.lms.servlet.MemberServlet;
 
 public class ServerApp {
-  ArrayList <ServletContextListener> listeners = new ArrayList<>();
-  int port;
-  public ServerApp (int port) {
-    this.port = port;
-  }
-  public void execute(){
+
+  public static void main(String[] args) {
     System.out.println("[수업관리시스템 서버 애플리케이션]");
 
-    try (ServerSocket serverSocket = new ServerSocket(this.port)) {
+    try (ServerSocket serverSocket = new ServerSocket(8888)) {
       System.out.println("서버 시작!");
-
-      //서버가 시작되면 보고를 받을 관찰자(observer) 에게 보고한다 
-      HashMap <String ,Object> servletContext = new HashMap<>();
-
-      for(ServletContextListener listener :listeners) {
-        listener.contextInitialized(servletContext);
-      }
 
       try (Socket clientSocket = serverSocket.accept();
           ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
           ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream())) {
 
         System.out.println("클라이언트와 연결되었음.");
-        BoardDao boardDao = (BoardDao)servletContext.get("boardDao");
-        LessonDao lessonDao = (LessonDao)servletContext.get("lessonDao");
-        MemberDao memberDao = (MemberDao)servletContext.get("memberDao");
+//        BoardCsvDao boardDao = new BoardCsvDao("./board.csv");
+//        MemberCsvDao memberDao = new MemberCsvDao("./member.csv");
+//        LessonCsvDao lessonDao = new LessonCsvDao("./lesson.csv");
+        BoardSerialDao boardDao = new BoardSerialDao("./board.ser");
+        MemberSerialDao memberDao = new MemberSerialDao("./member.ser");
+        LessonSerialDao lessonDao = new LessonSerialDao("./lesson.ser");
         BoardServlet boardServlet = new BoardServlet(boardDao,in, out);
         MemberServlet memberServlet = new MemberServlet(memberDao,in, out);
         LessonServlet lessonServlet = new LessonServlet(lessonDao,in, out);
@@ -75,36 +64,17 @@ public class ServerApp {
         }
 
         // 클라이언트와 연결을 끊기 전에 작업 내용을 파일에 저장한다.
- 
+        boardDao.saveData();
+        lessonDao.saveData();
+        memberDao.saveData();
       } 
 
       System.out.println("클라이언트와 연결을 끊었음.");
 
-      // 서버가 종료될때 관찰자에게 복한다 
-      for(ServletContextListener listener :listeners) {
-        listener.contextDestroyed(servletContext);
-      }
     } catch (Exception e) {
       e.printStackTrace();
     }
 
     System.out.println("서버 종료!");
-  }
-
-  // 서버가 시작하거나 종료할때 보고를 받을 객체를 등록하는 메서드 
-  // => 서블릿을 실행하는데 필요한 환경을 준비시키는 객체를 등록한다. 
-  public void addServletListener(ServletContextListener listener) {
-    listeners.add(listener);
-  }
-
-  public static void main(String[] args) {
-    ServerApp server = new ServerApp(8888);
-    //서버의 시작과 종료 상태를 보고 받을 객체를 등록한다 
-    // => 보고를 받을 객체를 
-
-    server.addServletListener(new ApplicationInitListener());
-
-
-    server.execute();
   }
 }
