@@ -149,7 +149,12 @@ public class App {
   }
 
  public static void main(String[] args) {
-   App app = new App("localhost",8888);
+   if(args.length !=2 ) {
+     System.out.println(
+         "실행방법: java ...-Dfile.encoding=UTF-8 -cp bin/main/ com.eomcs.lms.App 서버주소 포트번호 ");
+       return;
+   }
+   App app = new App(args[0],Integer.parseInt(args[1]));
    app.service();
 }
 }
