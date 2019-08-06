@@ -1,4 +1,4 @@
-// v33_3: 클라이언트 요청마다 서블릿 객체를 만들지않기 
+// v33_2: stateful 방식을 stateless 방식으로 변경하여 더많은 클라이언트 요청처리
 package com.eomcs.lms;
 
 import java.io.ObjectInputStream;

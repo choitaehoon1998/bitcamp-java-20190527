@@ -100,5 +100,36 @@ public class LessonDaoProxy implements LessonDao {
     return 1;
     }
   }
+  public static void main(String[] args)throws Exception {
+    LessonDaoProxy daoProxy = new LessonDaoProxy("localhost",8888);
+//  Lesson lesson = new Lesson();
+//  lesson.setNo(100);
+//  lesson.setContents("okokok");
+//  
+//  daoProxy.insert(lesson);
+//  System.out.println("입력성공");
 
+ 
+// Lesson lesson =daoProxy.findBy(100);
+// System.out.println(lesson);
+  
+  
+//  List<Lesson>lessons =daoProxy.findAll();
+// for(Lesson lesson : lessons) {
+//   System.out.println(lesson);
+// }
+
+  
+//  Board board = new Board();
+//  board.setNo(100);
+//  board.setContents("dhghfkrmfjgrnsdy");
+  
+//  daoProxy.update(board);
+//  Board board2 = daoProxy.findBy(100);
+//  System.out.println(board2);
+ 
+  
+//  daoProxy.delete(100);
+//  System.out.println("삭제되었습니다");
+  }
 }

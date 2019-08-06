@@ -109,5 +109,7 @@ public class MemberDaoProxy implements MemberDao {
       return 1;
     }
   }
-  
+  public static void main(String[] args) {
+
+  }
 }
