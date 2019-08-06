@@ -32,7 +32,6 @@ public class BoardDaoProxy implements BoardDao {
     out.writeUTF("/board/add");
     out.writeObject(board);
     out.flush();
-    System.out.print("add 요청함 => ");
 
     if (!in.readUTF().equals("ok"))
       throw new Exception(in.readUTF());
@@ -83,7 +82,6 @@ public class BoardDaoProxy implements BoardDao {
     out.writeUTF("/board/delete");
     out.writeInt(no);
     out.flush();
-    System.out.print("delete 요청함 => ");
 
     if (!in.readUTF().equals("ok"))
       throw new Exception(in.readUTF());

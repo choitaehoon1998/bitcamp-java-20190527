@@ -1,4 +1,4 @@
-package com.eomcs.lms;
+package com.eomcs.lms.servlet;
 
 
 // 클라이언트로부터 요청을 받았을때 serverApp에서 해당 요청을 처리하기위해 
