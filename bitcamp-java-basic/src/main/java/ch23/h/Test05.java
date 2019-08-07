@@ -1,4 +1,4 @@
-// URL 요청하기 - URLConnection 사용
+// URL 요청하기 - URLConnection 사용(게시물같은거 ,첨부파일같은거 받아오기가능 //TEST4에서는 불가)
 package ch23.h;
 
 import java.io.BufferedReader;
