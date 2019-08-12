@@ -1,4 +1,4 @@
-// client v36_1: Dao Proxy 클래스대신 DBMS를 사용하는 DAO로 대체한다 
+// client v36_2: Dao들이 connection 객체를 공유한다 . 즉 stateful 방식으로 통신  
 package com.eomcs.lms;
 
 import java.util.ArrayDeque;

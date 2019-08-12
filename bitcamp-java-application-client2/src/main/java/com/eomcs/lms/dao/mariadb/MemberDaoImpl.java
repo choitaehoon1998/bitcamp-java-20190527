@@ -21,8 +21,8 @@ public class MemberDaoImpl implements MemberDao {
           "insert into lms_member(name,email,pwd,cdt,tel,photo)"
           + " values('" + member.getName()
           + "','" + member.getEmail()
-          + "','" + member.getPassword()
-          + "',now()"
+          + "',password('" + member.getPassword()
+          + "'),now()"
           + ",'" + member.getTel()
           + "','" + member.getPhoto()
           + "')");
@@ -92,8 +92,8 @@ public class MemberDaoImpl implements MemberDao {
       return stmt.executeUpdate("update lms_member set"
           + " name='" + member.getName()
           + "', email='" + member.getEmail()
-          + "', pwd='" + member.getPassword()
-          + "', cdt='" + member.getRegisteredDate()
+          + "', pwd=password('" + member.getPassword()
+          + "'), cdt='" + member.getRegisteredDate()
           + "', tel=" + member.getTel()
           + ", photo=" + member.getPhoto()
           + " where member_id=" + member.getNo());
