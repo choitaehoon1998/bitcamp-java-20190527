@@ -17,7 +17,7 @@ public class Test08 {
         
         try (ResultSet rs = stmt.executeQuery(
             "select * from x_board order by board_id desc")) {
-        
+        //"select * from x_board order by board_id")) { desc: 역순으로 
           while (rs.next()) {
             // 레코드에서 컬럼 값을 꺼낼 때 컬럼 번호를 지정하는 것 보다 
             // 컬럼의 이름을 지정하는 것이 유지보수에 더 좋다.

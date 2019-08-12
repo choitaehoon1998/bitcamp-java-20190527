@@ -44,7 +44,6 @@ public class Test03 {
     // main 스레드를 5초 동안 Not Runnable 상태에 둔다.
     // 즉 main 스레드를 실행하지 않는다.
     Thread.currentThread().sleep(5000);
-    
     // 주의!
     // => dead 상태에서 다시 실행할 수 없다.
     //t.start(); // 예외 발생!

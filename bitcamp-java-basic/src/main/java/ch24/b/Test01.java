@@ -9,7 +9,7 @@ public class Test01 {
     // 이렇게 main()을 호출하는 스레드를 "main" 스레드라 부른다.
 
     // 현재 코드를 실행하는 스레드를 알아내기
-    Thread currThread = Thread.currentThread();
+    Thread currThread = Thread.currentThread();//currentThread()명령문이 실행하는 스레드가 누구인지:
     System.out.println(currThread.getName());
     
   }
