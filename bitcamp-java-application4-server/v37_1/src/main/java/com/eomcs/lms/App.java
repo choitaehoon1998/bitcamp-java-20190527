@@ -1,4 +1,4 @@
-// server v37_2:'규칙2' 프로토콜에 따라 클라이언트에게 추가 입력을 요구하기.
+// server v37_1:'규칙1' 프로토콜에 따라 클라이언트 요청을 처리한다
 package com.eomcs.lms;
 
 import java.io.BufferedReader;
@@ -57,21 +57,21 @@ try {
       commandMap.put("/lesson/add", new LessonAddCommand(null, lessonDao));
       commandMap.put("/lesson/delete", new LessonDeleteCommand(null, lessonDao));
       commandMap.put("/lesson/detail", new LessonDetailCommand(null, lessonDao));
-      commandMap.put("/lesson/list", new LessonListCommand(lessonDao));
+      commandMap.put("/lesson/list", new LessonListCommand(null, lessonDao));
       commandMap.put("/lesson/update", new LessonUpdateCommand(null, lessonDao));
 
       commandMap.put("/member/add", new MemberAddCommand(null, memberDao));
       commandMap.put("/member/delete", new MemberDeleteCommand(null, memberDao));
       commandMap.put("/member/detail", new MemberDetailCommand(null, memberDao));
-      commandMap.put("/member/list", new MemberListCommand(memberDao));
+      commandMap.put("/member/list", new MemberListCommand(null, memberDao));
       commandMap.put("/member/update", new MemberUpdateCommand(null, memberDao));
 
       commandMap.put("/board/add", new BoardAddCommand(null, boardDao));
       commandMap.put("/board/delete", new BoardDeleteCommand(null, boardDao));
       commandMap.put("/board/detail", new BoardDetailCommand(null, boardDao));
-      commandMap.put("/board/list", new BoardListCommand(boardDao));
+      commandMap.put("/board/list", new BoardListCommand(null, boardDao));
       commandMap.put("/board/update", new BoardUpdateCommand(null, boardDao));
-      
+
 
     } catch (Exception e) {
       System.out.println("DBMS에  연결할 수 없습니다!");
