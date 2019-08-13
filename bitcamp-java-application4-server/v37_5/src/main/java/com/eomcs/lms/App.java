@@ -1,4 +1,4 @@
-// client v37_6 : 스레드풀 적용하기 
+// client v37_5 : 한 요청 처리에 시간이 오래 걸릴경우 Stateless 통신방법으로도 해결안됨. 멀티 스레드 적용하여 해결하기  
 package com.eomcs.lms;
 
 import java.io.BufferedReader;
@@ -9,8 +9,6 @@ import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.HashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import com.eomcs.lms.dao.BoardDao;
 import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.dao.MemberDao;
@@ -43,9 +41,6 @@ public class App {
   Connection con;
   HashMap<String, Command> commandMap = new HashMap<>();
   int state;
-  
-  //스레드풀 
-  ExecutorService executorService=  Executors.newCachedThreadPool();
 
   public App() throws Exception {
     //처음에는 클라이언트 요청을 처리해야하는 상태로 설정한다 . 
@@ -88,30 +83,19 @@ public class App {
     }
   }
 
-  @SuppressWarnings("static-access")
   private void service() {
     try (ServerSocket serverSocket = new ServerSocket(8888);) {
       System.out.println("어플리케이션 서버가 시작되었음 ");
 
 
       while (true) {
-        //클라이언트가 접속하면 작업을 수행할 runnable 객체를 만들어 스레드풀에 맡긴다 . 
-        executorService.submit(new CommandProcessor(serverSocket.accept()));
+        //클라이언트가 접속하면 별도의 쓰레드를 생성하여 처리를 맡긴다. 
+        new Thread(new CommandProcessor(serverSocket.accept())).start();
         //한클라이언트가 serverstop 명령을 보내면 종료상태로 설정되고
         // 다음요청을 처리할때 즉시 실행을 멈춘다 . 
 
         if(state==STOP)
           break;
-      }
-      
-      //스레드풀에게 실행 종료를 요청한다 . 
-      //스레드풀은 자신이 관리하는 스레드들이 실행이 종료되었는지 감시한다. 
-      executorService.shutdown();
-      
-      //자신이 관리하는 모든 쓰레드들이 종료되었는지 매 0.5초마다 검사한다 .
-      //스레드풀의 모든스레드가 실행을 종료했으면 즉시 main스레드를 종료한다 
-      while(!executorService.isTerminated()) {
-      Thread.currentThread().sleep(500);
       }
       System.out.println("애플리케이션 서버를 종료함 ");
     }catch(Exception e) {
