@@ -231,7 +231,8 @@ DBMS 중에는 고정 크기인 컬럼의 값을 비교할 때 빈자리까지 �
 > insert into test1(c3) values('0'); /* false */
 > insert into test1(c3) values(1); /* true */
 > insert into test1(c3) values(0); /* false */
-
+> insert into test1(c3) values(true); /* true */
+> insert into test1(c3) values(false); /* false */
 
 ### 키 컬럼 지정 
 

@@ -112,7 +112,6 @@ public class ChatClient extends Frame implements ActionListener {
    }
  }
   public static void main(String[] args) {
-    System.out.println("Hello!");
     ChatClient app = new ChatClient("비트채팅");
     app.setVisible(true);
   }
