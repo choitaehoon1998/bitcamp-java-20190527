@@ -274,7 +274,7 @@ select date_sub(now(), interval 11 day);
 
 /* 두 날짜 사이의 간격을 알아내기 */
 datediff(날짜1, 날짜2);
-select datediff(curdate(), '2018-3-19');
+select datediff(curdate(), '2018-3-19')
 
 /* 날짜에서 특정 형식으로 값을 추출하기 */
 date_format(날짜, 형식)
