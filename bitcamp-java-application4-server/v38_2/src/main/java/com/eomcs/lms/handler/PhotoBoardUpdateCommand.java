@@ -2,9 +2,7 @@ package com.eomcs.lms.handler;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
-import java.sql.SQLException;
 import java.util.List;
-import com.eomcs.lms.App;
 import com.eomcs.lms.dao.PhotoBoardDao;
 import com.eomcs.lms.dao.PhotoFileDao;
 import com.eomcs.lms.domain.PhotoBoard;
@@ -24,8 +22,6 @@ public class PhotoBoardUpdateCommand implements Command {
   public void execute(BufferedReader in , PrintStream out ) {
 
     try {
-      App.con.setAutoCommit(false);
-
       int no = Input.getIntValue(in,out,"번호? ");
       PhotoBoard photoBoard = photoBoardDao.findBy(no);
       if (photoBoard == null) {
@@ -81,26 +77,12 @@ public class PhotoBoardUpdateCommand implements Command {
         count++;
       }
 
-      App.con.commit();
       out.println("사진을 변경하였습니다.");
 
-
     } catch (Exception e) {
-      try {
-        App.con.rollback();
-      } catch (SQLException e1) {
-      }
       out.println("데이터 변경에 실패했습니다!");
       System.out.println(e.getMessage());
-    }finally {
-      try {
-        App.con.setAutoCommit(true);
-      } catch (SQLException e) {
-      }
-
     }
-
-
   }
 
 }

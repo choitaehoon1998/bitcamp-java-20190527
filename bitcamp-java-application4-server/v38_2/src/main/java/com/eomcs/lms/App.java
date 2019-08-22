@@ -1,4 +1,4 @@
-// client v38_3 : 사진게시판 다루기 + 첨부파일 다루기 + 트렌젝션 적용 
+// client v38_2 : 사진게시판 다루기 + 첨부파일 다루기
 package com.eomcs.lms;
 
 import java.io.BufferedReader;
@@ -48,8 +48,8 @@ public class App {
 
   private static final int CONTINUE = 1;
   private static final int STOP = 0;
-  
-  public static Connection con;
+
+  Connection con;
   HashMap<String, Command> commandMap = new HashMap<>();
   int state;
 
