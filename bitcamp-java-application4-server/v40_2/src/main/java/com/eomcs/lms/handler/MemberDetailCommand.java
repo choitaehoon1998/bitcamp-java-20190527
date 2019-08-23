@@ -1,0 +1,44 @@
+package com.eomcs.lms.handler;
+
+import java.io.BufferedReader;
+import java.io.PrintStream;
+import com.eomcs.lms.dao.MemberDao;
+import com.eomcs.lms.domain.Member;
+import com.eomcs.util.Input;
+
+public class MemberDetailCommand implements Command{
+  private MemberDao memberDao;
+
+  public MemberDetailCommand(MemberDao memberDao) {
+    this.memberDao = memberDao;
+  }
+
+
+  @Override
+  public void execute(BufferedReader in , PrintStream out ) {
+    try {
+      int no = Input.getIntValue(in,out,"번호? ");
+      Member member = memberDao.findBy(no);
+      if(member ==null) {
+        out.println("해당번호의 데이터가없습니다");
+        return;
+      }
+      out.printf("번호 :%s\n",member.getNo());
+      out.printf("이름: %s\n",member.getName());
+      out.printf("이메일 :%s\n",member.getEmail());
+      out.printf("비밀번호: %s\n",member.getPassword());
+      out.printf("사진 :%s\n",member.getPhoto());
+      out.printf("등록일: %s\n",member.getRegisteredDate());
+      out.printf("전화번호: %s\n",member.getTel());
+
+    } catch (Exception e1) {
+      out.println("데이터조회에실패하였습니다");
+      e1.printStackTrace();
+    }
+
+
+  }
+
+
+}
+
