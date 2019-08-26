@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.util.ArrayList;
 
 // Dao가 사용할 커넥션 객체를 생성해주는 역활
-public class DateSource {
+public class DataSource {
   String jdbcDriver;
   String jdbcUrl;
   String username;
@@ -18,7 +18,7 @@ public class DateSource {
   //재활용할 커넥션을 담을 바구니를 준비.
   ArrayList<Connection>conPool = new ArrayList<>();
 
-  public DateSource(String jdbcDriver, String jdbcUrl, String username, String password) {
+  public DataSource(String jdbcDriver, String jdbcUrl, String username, String password) {
     this.jdbcDriver = jdbcDriver;
     this.jdbcUrl = jdbcUrl;
     this.username = username;
