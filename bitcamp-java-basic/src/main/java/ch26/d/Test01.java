@@ -48,6 +48,8 @@ public class Test01 {
     Board board = sqlSession.selectOne("board.select2"); // OK!
     
     System.out.println(board);
+    // 두개이상의 겶과를 리턴하는 select 문을 실행할때는 selectone ()을 실행해서는 안된다 오류발생
+    //sqlSession.selectOne("board.select1"); //Error!
   }
 
 }
