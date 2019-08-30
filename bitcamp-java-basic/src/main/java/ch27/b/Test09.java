@@ -5,12 +5,28 @@ public class Test09 {
 
   public static void main(String[] args) throws Exception {
     
-    Class<?> clazz = String.class;
+    Class<?> clazz = C.class;
     
     Class<?> superClass = clazz.getSuperclass();
     System.out.println(superClass.getName());
+    System.out.println("--------------------");
+    printSuperClass(clazz,0);
   }
-
+  static void printSuperClass(Class<?> clazz,int level) {
+   printIndent(level);
+     
+    System.out.println(clazz.getName());
+    if(clazz == Object.class)
+      return;
+    
+    printSuperClass(clazz.getSuperclass(),level +1);
+  }
+  static void printIndent(int level) {
+    for(int i =0; i<level ; i++) {
+      System.out.print("  ");
+      
+    }
+  }
 }
 
 

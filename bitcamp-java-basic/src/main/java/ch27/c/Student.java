@@ -11,11 +11,13 @@ public class Student {
   }
   
   public Student(String name, String email) {
+    System.out.println("Student(string,string)");
     this.name = name;
     this.email = email;
   }
   
   public Student(String name, String email, boolean working, int age) {
+    System.out.println("Student(string,string,boolean,int)");
     this.name = name;
     this.email = email;
     this.working = working;
