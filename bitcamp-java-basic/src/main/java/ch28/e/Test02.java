@@ -14,6 +14,15 @@ public class Test02 {
       age=20,
       working=true)
   int a;
+  //MyAnnotation4에있는 4개의 프로퍼티 모두 필수입력항목이기때문에 
+  // 모든항목의 값을 설정해야한다 .
+  /*
+  @MyAnnotation4(
+      value="okok",
+      name="홍길동",
+      working=true)
+  int x;
+  */
   
   /*
   @MyAnnotation4(
@@ -23,6 +32,13 @@ public class Test02 {
       working=true)
   */
   int b;
+  
+  
+  //value를 제외한 나머지 프로퍼티는 선택입력항목이기때문에 값을 설정하지않아도된다
+  // => 설정하지않으면 기본값이 사용된다 .
+  @MyAnnotation5(value ="okok")
+  int y;
+  
   
   @MyAnnotation5("okok") // value 프로퍼티 값만 설정할 경우에 이름을 생략할 수 있다.
   int c;

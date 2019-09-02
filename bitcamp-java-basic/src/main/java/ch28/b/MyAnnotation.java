@@ -10,3 +10,8 @@ import java.lang.annotation.RetentionPolicy;
 public @interface MyAnnotation {
 
 }
+
+//에노테이션 유지 범위 
+//1) SOURCE : .class 파일에 포함 안됨 . 
+//2) CLASS (기본) :.class파일에 포함 , 실행할떄 로딩안됨 . 
+//3) RUNTIME : .class 파일에 포함 , 실행할떄 메모리에 로딩됨 . 
