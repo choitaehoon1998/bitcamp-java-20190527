@@ -4,6 +4,7 @@ package ch29.h;
 import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ch29.SpringUtils;
 
 public class Test04 {
   public static void main(String[] args) {
@@ -11,7 +12,9 @@ public class Test04 {
         new ClassPathXmlApplicationContext("ch29/h/application-context-04.xml");
     
     System.out.println("---------------------------------------");
-    
+    SpringUtils.printObjects(iocContainer);
+    System.out.println("---------------------------------------");
+
     System.out.println(iocContainer.getBean("c1"));
     System.out.println(iocContainer.getBean("c2"));
     System.out.println(iocContainer.getBean("c3"));
@@ -19,10 +22,6 @@ public class Test04 {
     
     System.out.println("---------------------------------------");
     
-    String[] names = iocContainer.getBeanDefinitionNames();
-    for (String name : names) {
-      System.out.println(name + " ====> " + iocContainer.getBean(name).getClass().getName());
-    }
     
   }
 }

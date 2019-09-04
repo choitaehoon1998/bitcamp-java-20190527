@@ -27,7 +27,18 @@
     <property name="maker" value="비트오토"/>
     <property name="model" value="daynight"/>
   </bean>
+  <!-- 
+  BlackBox blackBox = new BlackBox();
+  balckBOX.setMaker("비토오토");
+  blakcBox.setModlel("dayNight);
   
+  CarFactory catfactory = new CarFactory2(blackbox);
+  Car c1 = carfactory.create("equus");
+  
+  
+  
+  
+   -->
 </beans>
 
 

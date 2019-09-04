@@ -13,7 +13,8 @@ public class AppConfig4 {
   // 이때 @Bean 애노테이션을 붙여 이 메서드를 호출하라고 스프링 IoC 컨테이너에게 알려줘야 한다.
   // 스프링 IoC 컨테이너는 이 메소드를 호출한 후 그 리턴 값을 메서드 이름으로 저장한다.
   // 만약 @Bean 애노테이션이 따로 이름을 지정한다면 그 이름으로 리턴 값을 저장한다.
-  // 
+  // 예 ) 다른사람이 만든 클래스의 인스턴스를 우리 IoC컨테이너 에 등록하고싶을때 사용한다 . 
+  //     => SqlSessionFactory , DataSource,PlatformTransactionMangerEMD 
   @Bean
   public BlackBox blackBox() {
     // 이 메서드의 이름이 리턴 값을 저장하는 이름으로 사용되기 때문에 
@@ -25,6 +26,7 @@ public class AppConfig4 {
   }
   
   // 스프링 IoC 컨테이너로부터 객체를 주입받고 싶다면 파라미터에 선언하라.
+  //=> 파라미 이름으로 객체를 찾는것이 아니라 파라미터 타입으로 객체를 찾는다
   @Bean
   public Car car1(Sub1Car sub1Car) {
     Car obj = new Car();
@@ -36,7 +38,7 @@ public class AppConfig4 {
   }
   
   //스프링 IoC 컨테이너를 파라미터로 주입 받을 수 있다.
-  @Bean
+ @Bean
   public Car car2(ApplicationContext iocContainer) {
     BlackBox bb = (BlackBox)iocContainer.getBean("blackBox");
     
