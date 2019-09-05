@@ -1,4 +1,4 @@
-// v50_1 : Spring IoC +Mybatis
+// v51_1 : Spring IoC +Mybatis
 package com.eomcs.lms;
 
 import java.io.BufferedReader;
