@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Configuration;
 // Mybatis DAO 구현체 자동 생성하기
 // => @MapperScan(DAO 인터페이스가 들어 있는 패키지)
 @MapperScan("ch29.k1.dao")
-
 public class MybatisConfig {
   
   // Mybatis의 SqlSessionFactory 객체 준비
