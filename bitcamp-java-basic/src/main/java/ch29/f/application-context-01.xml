@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
  <!-- CarFacoty 객체를 생성하기 
- => Car 객체를 만들기위해 이와같이 굳이 CArfactoyr 객체를 생성할필요가없다
+ => Car 객체를 만들기위해 이와같이 굳이 CArfactory 객체를 생성할필요가없다
  => create메서드는 스태틱이기때문이다 -->
     <bean id="factory" class ="ch29.f.CarFactory"></bean>
   <!-- factory 객체를 만들고싶은것이아닌 , factory 에서 create 메소드를 통해 만든 객체 저장하고싶음  -->
