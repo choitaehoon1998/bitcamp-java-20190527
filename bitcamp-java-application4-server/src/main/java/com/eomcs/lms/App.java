@@ -1,18 +1,28 @@
-// v53_2 : log4j2 적용하기 
+// v54_1 : Apache의 HttpClient 를 이용하여  Http 서버 만들기 
 package com.eomcs.lms;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.Collection;
+import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import org.apache.http.ConnectionClosedException;
+import org.apache.http.HttpException;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.MethodNotSupportedException;
+import org.apache.http.config.SocketConfig;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.bootstrap.HttpServer;
+import org.apache.http.impl.bootstrap.ServerBootstrap;
+import org.apache.http.protocol.HttpContext;
+import org.apache.http.protocol.HttpRequestHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.aop.support.AopUtils;
@@ -22,24 +32,20 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.eomcs.util.RequestMappingHandlerMapping;
 import com.eomcs.util.RequestMappingHandlerMapping.RequestHandler;
+import com.eomcs.util.ServletRequest;
+import com.eomcs.util.ServletResponse;
 
-public class App {
-  
+public class App implements HttpRequestHandler{
+
   private static final Logger logger  = LogManager.getLogger(App.class);
 
-  private static final int CONTINUE = 1;
-  private static final int STOP = 0;
 
   ApplicationContext appCtx;
   RequestMappingHandlerMapping handlerMapping;
   int state;
 
-  // 스레드풀
-  ExecutorService executorService = Executors.newCachedThreadPool();
 
   public App() throws Exception {
-    // 처음에는 클라이언트 요청을 처리해야 하는 상태로 설정한다.
-    state = CONTINUE; 
     appCtx = new AnnotationConfigApplicationContext(AppConfig.class);
 
     // Spring IoC 컨테이너에 들어 있는(Spring IoC 컨테이너가 생성한) 객체 알아내기
@@ -50,7 +56,7 @@ public class App {
           appCtx.getBean(beanName).getClass().getSimpleName(),
           beanName));
     }
-    System.out.println("------------------------------------");
+    logger.debug("------------------------------------");
 
     handlerMapping = createRequestMappingHandlerMapping();
   }
@@ -71,14 +77,14 @@ public class App {
 
       Method[] methods = null;
       if(AopUtils.isAopProxy(obj)) {//원본이아니라 AopProxy객체일경우 
-       try {
-        //프록시 객체의 클래스가아니라 원본객체의 클래스정보를 가져온다 . 
-        Class<?> originClass = 
-            (Class<?>) obj.getClass().getMethod("getTargetClass").invoke(obj);
-        methods = originClass.getMethods();
-       }catch(Exception e) {
-         e.printStackTrace();
-       }
+        try {
+          //프록시 객체의 클래스가아니라 원본객체의 클래스정보를 가져온다 . 
+          Class<?> originClass = 
+              (Class<?>) obj.getClass().getMethod("getTargetClass").invoke(obj);
+          methods = originClass.getMethods();
+        }catch(Exception e) {
+          e.printStackTrace();
+        }
       }else {//원본객체일경우 원본객체의 클래스로부터 메서드 목록을 가져온다 
         // => 객체에서 메서드 정보를 추출한다.
         methods = obj.getClass().getMethods();
@@ -89,127 +95,146 @@ public class App {
           continue;
         // @RequestMapping 이 붙은 메서드를 찾으면 mapping 객체에 보관한다.
         mapping.addRequestHandler(anno.value()[0], obj, m);
-       logger.trace(String.format("%s ==> %s.%s()", anno.value()[0],
-           obj.getClass().getSimpleName(),
-           m.getName()));
+        logger.trace(String.format("%s ==> %s.%s()", anno.value()[0],
+            obj.getClass().getSimpleName(),
+            m.getName()));
       }
     });
 
     return mapping;
   }
 
-  @SuppressWarnings("static-access")
-  private void service() {
+  private void service()throws Exception {
+    //HTML 파일이 있는 디렉토리 
 
-    try (ServerSocket serverSocket = new ServerSocket(8888);) {
-     logger.info("애플리케이션 서버가 시작되었음!");
 
-      while (true) {
-        // 클라이언트가 접속하면 작업을 수행할 Runnable 객체를 만들어 스레드풀에 맡긴다.
-        executorService.submit(new CommandProcessor(serverSocket.accept()));
+    SocketConfig socketConfig = SocketConfig.custom()
+        .setSoTimeout(15000)
+        .setTcpNoDelay(true)
+        .build();
 
-        // 한 클라이언트가 serverstop 명령을 보내면 종료 상태로 설정되고 
-        // 다음 요청을 처리할 때 즉시 실행을 멈춘다.
-        if (state == STOP)
-          break;
+    final HttpServer server = ServerBootstrap.bootstrap()
+        .setListenerPort(8888)
+        .setServerInfo("Bitcamp/1.1")
+        .setSocketConfig(socketConfig)
+        .setSslContext(null)
+        .setExceptionLogger(ex-> {
+          if (ex instanceof SocketTimeoutException) {
+            System.err.println("Connection timed out");
+          } else if (ex instanceof ConnectionClosedException) {
+            System.err.println(ex.getMessage());
+          } else {
+            ex.printStackTrace();
+          }          
+        })
+        .registerHandler("*", this)
+        .create();
+
+    server.start();
+    logger.info("서버 실행중 ...");  
+
+    server.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+
+    Runtime.getRuntime().addShutdownHook(new Thread() {
+      @Override
+      public void run() {
+        server.shutdown(5, TimeUnit.SECONDS);
       }
+    });
 
-      // 스레드풀에게 실행 종료를 요청한다.
-      // => 스레드풀은 자신이 관리하는 스레드들이 실행이 종료되었는지 감시한다.
-      executorService.shutdown();
 
-      // 스레드풀이 관리하는 모든 스레드가 종료되었는지 매 0.5초마다 검사한다.
-      // => 스레드풀의 모든 스레드가 실행을 종료했으면 즉시 main 스레드를 종료한다.
-      while (!executorService.isTerminated()) {
-        Thread.currentThread().sleep(500);
-      }
+  }
 
-      logger.info("애플리케이션 서버를 종료함!");
+
+
+
+  @Override
+  public void handle(HttpRequest request, HttpResponse response, HttpContext context)
+      throws HttpException, IOException {
+
+    String method = request.getRequestLine().getMethod().toUpperCase(Locale.ROOT);
+    if (!method.equals("GET")) {// Get 요청이 아니라면 오류 내용을 응답한다 . 
+      throw new MethodNotSupportedException(method + " method not supported");
+    }
+    //커맨드 객체 애ㅔ잇는 requestHandler 를 호출할때 넘겨줄 파라미터 객체 준비
+    ServletRequest servletRequest =new ServletRequest();
+    ServletResponse servletResponse = new ServletResponse();
+    //클라이언트가 요청한 명령알아내기 
+    //[request line]
+    // =>GET/member/add?name=aaa&email=aaa@test.com&password=1111&tel=1111-1111&age=20
+    //[uri]
+    // =>/member/add?name=aaa&email=aaa@test.com&password=1111&tel=1111-1111&age=20
+    String uriStr =request.getRequestLine().getUri();
+    String values[] =uriStr.split("\\?");
+
+    ///member/add
+    String command =values[0];
+    logger.info(command);
+    if(values.length>1) {
+    // => name=aaa&email=aaa@test.com&tel=1111-1111&age=20
+    String queryString = values[1]; //출력 용 .
+    logger.info(queryString);
+    }
+    try { RequestHandler requestHandler = 
+        handlerMapping.getRequestHandler(command);
+
+    if (requestHandler != null) {
+      //클라이언트 요청 처리하기위해 메서드를 호출한다 .
+      servletRequest.setUri(uriStr); // URL 에 포함된 파라미타값을 추출하여 보관한다 . 
+      requestHandler.method.invoke(requestHandler.bean,
+          servletRequest ,
+          servletResponse);
+
+      //클라이언트에게 응답 
+      response.setStatusCode(HttpStatus.SC_OK);
+      StringEntity entity = new StringEntity(
+          servletResponse.getResponseEntity(),
+          ContentType.create("text/html", "UTF-8"));
+      response.setEntity(entity);
+      logger.info("성공");
+
+    } else {
+      response.setStatusCode(HttpStatus.SC_NOT_FOUND);
+      StringEntity entity = new StringEntity(
+          "<html><body><h1>해당 명령을 찾을 수 없습니다</h1></body></html>",
+          ContentType.create("text/html", "UTF-8"));
+      response.setEntity(entity);
+      logger.info("실패");    
+    }
+
+
 
     } catch (Exception e) {
-      logger.info("소켓 통신 오류!");
-      StringWriter out = new StringWriter();
-      e.printStackTrace(new PrintWriter(out));
-      logger.debug(out.toString());
+      logger.info("클라이언트 요청처리중 오류발생!");
+
+      StringWriter out2 = new StringWriter();
+      e.printStackTrace(new PrintWriter(out2));
+      logger.debug(out2.toString());
+
+      response.setStatusCode(HttpStatus.SC_OK);
+      StringEntity entity = new StringEntity(
+          "<html><body><h1>요청 처리중 오류발생!</h1></body></html>",
+          ContentType.create("text/html", "UTF-8"));
+      response.setEntity(entity);
     }
   }
 
-  class CommandProcessor implements Runnable {
-
-    Socket socket;
-
-    public CommandProcessor(Socket socket) {
-      this.socket = socket;
-    }
-
-    @Override
-    public void run() {
-      try (Socket socket = this.socket;
-          BufferedReader in = new BufferedReader(
-              new InputStreamReader(socket.getInputStream()));
-          PrintStream out = new PrintStream(socket.getOutputStream())) {
-
-        logger.info("클라이언트와 연결됨!");
-
-        // 클라이언트가 보낸 명령을 읽는다.
-        String request = in.readLine();
-        if (request.equals("quit")) {
-          out.println("Good bye!");
-
-        } else if (request.equals("serverstop")) {
-          state = STOP;
-          out.println("Good bye!");
-
-        } else {
-          try {
-            RequestHandler requestHandler = 
-                handlerMapping.getRequestHandler(request);
-
-            if (requestHandler != null) {
-              /*
-              Method m = requestHandler.method;
-              Object obj = requestHandler.bean;
-              m.invoke(obj, in, out);
-               */
-              requestHandler.method.invoke(requestHandler.bean, in, out);
-            } else {
-              throw new Exception("요청을 처리할 메서드가 없습니다.");
-            }
-
-          } catch (Exception e) {
-            //out.println("해당 명령을 처리할 수 없습니다.");
-            logger.info("해당명령을 처리할수없습니다");
-            StringWriter out2 = new StringWriter();
-            e.printStackTrace(new PrintWriter(out2));
-            logger.debug(out2.toString());
-          }
-        }
-        out.println("!end!");
-        out.flush();
-
-        logger.info("클라이언트와 연결 끊음!");
-
-      } catch (Exception e) {
-        logger.info("클라이언트와 통신 오류!");
-
-      }
-    }
-  }
 
   public static void main(String[] args) {
-    
+
     try {
       App app = new App();
       app.service();
 
     } catch (Exception e) {
       logger.info("시스템 실행 중 오류 발생!");
-      
+
       StringWriter out2 = new StringWriter();
       e.printStackTrace(new PrintWriter(out2));
       logger.debug(out2.toString());
     }
   }
+
 }
 
 
