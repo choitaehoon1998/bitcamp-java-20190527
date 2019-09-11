@@ -37,7 +37,7 @@ public class Servlet02 extends GenericServlet {
     //    그래서 getParameter()를 호출하여 값을 꺼내면 
     //    위의 코드를 UTF-16으로 바꾼 값을 리턴한다.
     //    즉 각 바이트에 그냥 00을 붙여 문자열을 만든 후 리턴한다.
-    //    왜? 영어를 2바이트 유니코드를 만드는 것은 그냥 앞에 00 1바이트를 붙이면 되기 때문이다.
+    //    왜? 영어를 2바이트 유니코드로 바꿀때 그냥 앞에 00 1바이트를 붙이면 되기 때문이다.
     //    위의 코드를 UTF-16으로 바꾸면 다음과 같다.
     //      0041 0042 0043 00EA 00B0 0080 00EA 00B0 0081
     //    이렇게 변환된 코드를 화면에 출력하면 다음 폰트로 보인다.
@@ -53,7 +53,7 @@ public class Servlet02 extends GenericServlet {
     //    반드시 getParamter()를 최초로 호출하기 전이어야 한다.
     //    한 번 getParameter()를 호출한 후에는 소용없다.
     //
-    //req.setCharacterEncoding("UTF-8");
+    req.setCharacterEncoding("UTF-8");
 
     int age = Integer.parseInt(req.getParameter("age"));
     String name = req.getParameter("name");
