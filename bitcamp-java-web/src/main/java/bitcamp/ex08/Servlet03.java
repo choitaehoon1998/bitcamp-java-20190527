@@ -34,8 +34,8 @@ public class Servlet03 extends HttpServlet {
     //    결제완료 후 결과를 출력하지 않고 즉시 결제 상태 페이지로 보내고 싶을 때
     // => 리다이렉트 HTTP 응답 프로토콜
     /*
-HTTP/1.1 302
-Location: s100
+HTTP/1.1 302     <------ 리다이렉트 응답 상태 코드 
+Location: s100   <----- 리다이렉트 URL 
 Content-Type: text/html;charset=UTF-8
 Content-Length: 0
 Date: Tue, 02 Apr 2019 03:38:45 GMT
@@ -51,9 +51,9 @@ Date: Tue, 02 Apr 2019 03:38:45 GMT
     out.println("</head><body>");
     // 버퍼가 꽉차서 클라이언트로 자동으로 출력되어 리다이렉트가 안먹히는 상황을 보고 싶다면 
     // 다음 반복문 주석을 풀라!
-    //for (int i = 0; i < 3000; i++) { 
-      out.println("안녕하세요! - /ex08/s1");
-    //}
+    for (int i = 0; i < 4000; i++) { 
+      out.println("안녕하세요! - /ex08/s3");
+    }
     out.println("</body></html>");
     
     // 클라이언트에게 URL을 알려줄 때 상대 경로를 지정할 수 있다.
