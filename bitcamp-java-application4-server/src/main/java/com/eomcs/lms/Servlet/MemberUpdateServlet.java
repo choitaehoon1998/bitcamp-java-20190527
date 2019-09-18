@@ -1,24 +1,30 @@
 package com.eomcs.lms.Servlet;
 
 import java.io.IOException;
+import java.util.UUID;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import org.springframework.context.ApplicationContext;
 import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
-
+@MultipartConfig(maxFileSize =1024*1024*10)
 @WebServlet("/member/update")
 public class MemberUpdateServlet extends HttpServlet { 
   private static final long serialVersionUID = 1L;
   private MemberDao memberDao;
-
+  String uploadDir;
   @Override
   public void init() throws ServletException {
     ApplicationContext appCtx= (ApplicationContext)getServletContext().getAttribute("iocContainer");
     memberDao = appCtx.getBean(MemberDao.class);
+
+    uploadDir = getServletContext().getRealPath("/upload/member");
+    
   }
 @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
@@ -29,8 +35,16 @@ public class MemberUpdateServlet extends HttpServlet {
       member.setName(request.getParameter("name"));
       member.setEmail(request.getParameter("email"));
       member.setPassword(request.getParameter("password"));
-      member.setPhoto(request.getParameter("photo"));
       member.setTel(request.getParameter("tel"));
+      
+      //업로드된 사진 파일 처리 
+      Part photopart =  request.getPart("photo");
+      member.setPhoto(request.getParameter("photo"));
+      if(photopart != null && photopart.getSize()>0) {
+        String filename = UUID.randomUUID().toString();
+        member.setPhoto(filename);
+        photopart.write(uploadDir+ "/" +filename);
+      }
       
       memberDao.update(member);
       response.sendRedirect("/member/list");
