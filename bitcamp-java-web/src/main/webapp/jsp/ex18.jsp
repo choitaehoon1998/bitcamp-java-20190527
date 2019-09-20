@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ex16</title>
+<title>ex18</title>
 </head>
 <body>
 <h1>JSP 액션 태그 - jsp:useBean (계속)</h1>

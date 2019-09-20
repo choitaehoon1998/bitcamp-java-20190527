@@ -12,7 +12,7 @@
 <title>ex20</title>
 </head>
 <body>
-<h1>pageError, isPageError</h1>
+<h1>ErrorPage속성과, isErrorPage속성</h1>
 10 / 0 = <%=10 / 0%>
 </body>
 </html>
