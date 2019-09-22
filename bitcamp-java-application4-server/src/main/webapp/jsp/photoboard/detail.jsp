@@ -13,26 +13,26 @@
 <body>
 
 <jsp:include page="../header.jsp"/>
-    
+<% 
+    PhotoBoard photoBoard =(PhotoBoard) request.getAttribute("photoBoard");
+%>
 <div id='content'>
 <h1>사진게시물</h1>
-<%
-PhotoBoard photoBoard = (PhotoBoard) request.getAttribute("photoBoard");
-%>
 <form action='/photoboard/update'
       method='post' enctype='multipart/form-data'>
-번호: <input type='text' name='no' value='<%=photoBoard.getNo()%>' readonly><br>
-제목: <input type='text' name='title' value='<%=photoBoard.getTitle()%>'><br>
-수업: <%=photoBoard.getLessonNo()%><br>
-조회수: <%=photoBoard.getViewCount()%><br>
+번호: <input type='text' name='no' value='${photoBoard.no}' readonly><br>
+제목: <input type='text' name='title' value='${photoBoard.title}'><br>
+수업: ${photoBoard.lessonNo}<br>
+조회수: ${photoBoard.viewCount}<br>
 <p>
 <% 
 List<PhotoFile> files = photoBoard.getFiles();
 for (PhotoFile file : files) {
   if (file.getFilePath() == null)
     continue;
+  pageContext.setAttribute("file", file);
 %>
-  <img src='/upload/photoboard/<%=file.getFilePath()%>' class='photo2'> 
+  <img src='/upload/photoboard/${file.filePath}' class='photo2'> 
 <%}%>
 </p>
 <% 
@@ -42,7 +42,7 @@ for (int i = 0; i < 6; i++) {
 <%}%>
 
 <button>변경</button>
-<a href='/photoboard/delete?no=<%=photoBoard.getNo()%>'>삭제</a>
+<a href='/photoboard/delete?no=${photoBoard.no}'>삭제</a>
 </form>
 </div>
 

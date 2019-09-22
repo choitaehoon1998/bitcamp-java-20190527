@@ -26,12 +26,13 @@
 <%
 List<Lesson> lessons = (List<Lesson>)request.getAttribute("lessons");
 for (Lesson lesson : lessons) {
+  pageContext.setAttribute("lesson",lesson);
 %>
   <tr>
     <td><%=lesson.getNo()%></td>
-    <td><a href='/lesson/detail?no=<%=lesson.getNo()%>'><%=lesson.getTitle()%></a></td>
-    <td><%=lesson.getStartDate()%> ~ <%=lesson.getEndDate()%></td>
-    <td><%=lesson.getTotalHours()%></td>
+    <td><a href='/lesson/detail?no=${lesson.no}'>${lesson.title}</a></td>
+    <td>${lesson.startDate} ~ ${lesson.endDate}</td>
+    <td>${lesson.totalHours}</td>
   </tr>
 <%}%>
 </table>

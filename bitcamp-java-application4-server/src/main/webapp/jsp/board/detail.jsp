@@ -1,4 +1,3 @@
-<%@page import="com.eomcs.lms.domain.Board"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,17 +13,15 @@
     
 <div id='content'>
 <h1>게시물</h1>
-<%
-Board board = (Board) request.getAttribute("board");
-%>
+
 <form action='/board/update' method='post'>
-번호 : <input type='text' name='no' value='<%=board.getNo()%>' readonly><br>
+번호 : <input type='text' name='no' value='${board.no}' readonly><br>
 내용 : <textarea name='contents' rows='5'
-            cols='50'><%=board.getContents()%></textarea><br>
-등록일: <%=board.getCreatedDate()%><br>
-조회수: <%=board.getViewCount()%><br>
+            cols='50'>${board.contents}</textarea><br>
+등록일: ${board.createdDate}<br>
+조회수: ${board.viewCount}<br>
 <button>변경</button>
-<a href='/board/delete?no=<%=board.getNo()%>'>삭제</a>
+<a href='/board/delete?no=${board.no}'>삭제</a>
 </form>
 </div>
 

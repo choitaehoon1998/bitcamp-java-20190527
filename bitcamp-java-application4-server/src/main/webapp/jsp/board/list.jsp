@@ -26,12 +26,13 @@
 <%
 List<Board> boards = (List<Board>)request.getAttribute("boards");
 for (Board board : boards) {
+  pageContext.setAttribute("board",board);
 %>
   <tr>
-    <td><%=board.getNo()%></td>
-    <td><a href='/board/detail?no=<%=board.getNo()%>'><%=board.getContents()%></a></td>
-    <td><%=board.getCreatedDate()%></td>
-    <td><%=board.getViewCount()%></td>
+    <td>${board.no}</td>
+    <td><a href='/board/detail?no=${board.no}'>${board.contents}</a></td>
+    <td>${board.createdDate}</td>
+    <td>${board.viewCount}</td>
   </tr>
 <%}%>
 </table>

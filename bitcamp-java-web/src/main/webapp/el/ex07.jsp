@@ -16,6 +16,7 @@ HashMap<String,Object> map = new HashMap<>();
 map.put("s01", "김구");
 map.put("s02", "안중근");
 map.put("s03", "윤봉길");
+  map.put("s03 ^^", "오호라");
 
 pageContext.setAttribute("map", map);
 %>
@@ -23,6 +24,13 @@ pageContext.setAttribute("map", map);
 ${map["s01"]}<br>
 ${map['s01']}<br>
 ${map.s01}<br>
+${map["s03 ^^"]}<br>
+${map['s03 ^^']}<br>
+  
+  <%--
+  ${map.s03 ^^}<br>
+  key 문자열에 공백이나 특수문자가 포함된경우 점(.)을 사용할수없다 .  
+ --%>
 </body>
 </html>
 

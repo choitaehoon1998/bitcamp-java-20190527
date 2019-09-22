@@ -30,20 +30,6 @@ public class LoginServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
     
-    // 클라이언트가 보낸 쿠키 중에서 이메일 값 꺼내기
-    String email = "";
-    Cookie[] cookies = request.getCookies();
-    if (cookies != null) {
-      for (Cookie cookie : cookies) {
-        if (cookie.getName().equals("email")) {
-          email = cookie.getValue();
-          break;
-        }
-      }
-    }
-    
-    request.setAttribute("email", email);
-    
     response.setContentType("text/html;charset=UTF-8");
     request.getRequestDispatcher("/jsp/auth/form.jsp").include(request, response);
   }

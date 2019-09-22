@@ -13,7 +13,7 @@
 <h1>로그인 폼</h1>
 <form action='/auth/login' method='post'>
 이메일: <input type='text' name='email' 
-             value='<%=request.getAttribute("email")%>'><br>
+             value='${cookie.email.value}'><br>
 암호: <input type='text' name='password'><br>
 <button>로그인</button>
 </form>

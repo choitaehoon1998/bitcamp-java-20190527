@@ -1,4 +1,3 @@
-<%@page import="com.eomcs.lms.domain.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,20 +13,18 @@
     
 <div id='content'>
 <h1>회원</h1>
-<%
-Member member = (Member) request.getAttribute("member");
-%>
+
 <form action='/member/update' method='post' enctype='multipart/form-data'>
-<img src='/upload/member/<%=member.getPhoto()%>' class='photo1'><br> 
+<img src='/upload/member/${member.photo}' class='photo1'><br> 
 <input type='file' name='photo'><br>
-번호: <input type='text' name='no' value='<%=member.getNo()%>' readonly><br>
-이름: <input type='text' name='name' value='<%=member.getName()%>'><br>
-이메일: <input type='text' name='email' value='<%=member.getEmail()%>'><br>
-암호: <input type='text' name='password' value='<%=member.getPassword()%>'><br>
-전화: <input type='text' name='tel' value='<%=member.getTel()%>'><br>
-가입일: <%=member.getRegisteredDate()%><br>
+번호: <input type='text' name='no' value='${member.no}' readonly><br>
+이름: <input type='text' name='name' value='${member.name}'><br>
+이메일: <input type='text' name='email' value='${member.email}'><br>
+암호: <input type='text' name='password' value='${member.password}'><br>
+전화: <input type='text' name='tel' value='${member.tel}'><br>
+가입일: ${member.registeredDate}<br>
 <button>변경</button>
-<a href='/member/delete?no=<%=member.getNo()%>'>삭제</a>
+<a href='/member/delete?no=${member.no}'>삭제</a>
 </form>
 </div>
 

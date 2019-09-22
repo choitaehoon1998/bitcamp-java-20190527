@@ -1,10 +1,8 @@
-// v57_1 : Jsp 활용하여 서블릿에서 출력기능 추출하기  
+// v57_2 : Jsp에 EL을 적용하기   
 package com.eomcs.lms;
 
 // 작업:
-// => /webapp/jsp/board/폴더 생성
-// => PhotoxxxxServlet 에서 출력기능 jsp 로 이전 
-// => /webapp/jsp/board/.*jsp 생성  
+// => /webapp/jsp/***/*.jsp변경 
 
 
 // dummy 클래스!
