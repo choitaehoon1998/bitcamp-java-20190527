@@ -33,7 +33,7 @@ public class PhotoBoardUpdateCommand implements pageController {
   @Override
   public String execute(HttpServletRequest request, HttpServletResponse response) 
       throws Exception {
-    request.getServletContext().getRealPath("/upload/photoboard");
+     uploadDir =request.getServletContext().getRealPath("/upload/photoboard");
     // 트랜잭션 동작을 정의한다.
     DefaultTransactionDefinition def = new DefaultTransactionDefinition();
     def.setName("tx1");
