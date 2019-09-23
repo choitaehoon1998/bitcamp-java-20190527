@@ -16,7 +16,7 @@
 </pre>
 
 <h2>HTTP 요청하기</h2>
-<c:url value="http://localhost:8080/java-web/jstl/ex05.jsp" var="url1">
+<c:url value="http://localhost:8888/bitcamp-java-web/jstl/ex10_sub.jsp" var="url1">
     <c:param name="name" value="홍길동"/>
     <c:param name="age" value="20"/>
     <c:param name="gender" value="man"/>
@@ -27,6 +27,10 @@
 <c:import url="${url1}" var="contents"/>
 
 <textarea cols="120" rows="20">${pageScope.contents}</textarea>
+
+<c:import url="https://www.naver.com" var="contents2"/>
+<textarea cols="120" rows="20">${pageScope.contents2}</textarea>
+
 
 </body>
 </html>
