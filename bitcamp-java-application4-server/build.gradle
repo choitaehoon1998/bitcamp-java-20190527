@@ -55,15 +55,18 @@ dependencies {
     
     //log4j2
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.12.1'
+   
     //Apache Http Client    
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.9'
 
     //servlet api
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
     
-  //jstl
+    //jstl
     compile group: 'javax.servlet', name: 'jstl', version: '1.2'
     
+    // Javax Annotation API(for OpenJDK, Oracle JDK includes this library)
+    compile group: 'javax.annotation', name: 'javax.annotation-api', version: '1.3.2'
 
 
 
