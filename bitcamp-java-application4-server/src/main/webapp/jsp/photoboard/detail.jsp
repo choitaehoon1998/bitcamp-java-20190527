@@ -1,6 +1,3 @@
-<%@page import="com.eomcs.lms.domain.PhotoFile"%>
-<%@page import="java.util.List"%>
-<%@page import="com.eomcs.lms.domain.PhotoBoard"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -14,9 +11,7 @@
 <body>
 
 <jsp:include page="../header.jsp"/>
-<% 
-    PhotoBoard photoBoard =(PhotoBoard) request.getAttribute("photoBoard");
-%>
+    
 <div id='content'>
 <h1>사진게시물</h1>
 <form action='/photoboard/update'
@@ -27,11 +22,11 @@
 조회수: ${photoBoard.viewCount}<br>
 <p>
 <c:forEach items="${photoBoard.files}" var="file">
-<img src='/upload/photoboard/${file.filePath}' class='photo2'> 
+  <img src='/upload/photoboard/${file.filePath}' class='photo2'> 
 </c:forEach>
 </p>
 <c:forEach begin="1" end="6">
-      사진 : <input type:'file' name='filepath'><br>
+  사진: <input type='file' name='filePath'><br>
 </c:forEach>
 
 <button>변경</button>
