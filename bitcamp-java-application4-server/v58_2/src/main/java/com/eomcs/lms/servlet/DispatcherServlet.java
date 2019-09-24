@@ -37,8 +37,11 @@ public class DispatcherServlet extends HttpServlet {
         servletPath, pathInfo));
     
     try {
-      // 클라이언트 요청을 처리할 pageController를 구현한 객체를 찾는다.
-      pageController pageController = (pageController) iocContainer.getBean(pathInfo);
+      // 클라이언트 요청을 처리할 pageController를 찾는다.
+      pageController pageController = iocContainer.getBean(pathInfo);
+      
+      //페이지 컨트롤러에서 @RequestMapping이 붙은 메서드를 찾는다 .
+      Method requestHandler = findRequestHandler(pageController);
       
       // 페이지 컨트롤러에게 실행을 위임한다.
       String viewUrl = pageController.execute(request, response);

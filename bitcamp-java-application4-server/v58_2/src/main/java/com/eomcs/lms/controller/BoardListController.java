@@ -9,12 +9,12 @@ import com.eomcs.lms.dao.BoardDao;
 import com.eomcs.lms.domain.Board;
 
 @Component("/board/list")
-public class BoardListController implements pageController {
+public class BoardListController {
   //@Autowired // 스프링 애노테이션 
   @Resource // java 표준 애노테이션 
   private BoardDao boardDao; // Spring Ioc Container 가 의존 객체를 자동으로 주입해준다 
 
-  @Override
+  @RequestMapping
   public String execute(HttpServletRequest request, HttpServletResponse response) 
       throws Exception {
       List<Board> boards = boardDao.findAll();

@@ -1,11 +1,10 @@
-// v58_2 : Page Controller 를 일반 클래스(Plain Old Java Object)로 전환하기
+// v58_3 : Request Handler를 @RequestHandler 애노테이션으로 표시하기 . 
 package com.eomcs.lms;
 
 // 작업:
-// => Command 인터페이스 생성 
-// => XxxServlet 을  XxxCommnad 로 전환 
-// => 커맨드 객체의 관리주체를 서블릿 컨테이너에서 Spring Ioc 컨테이나로 이전 .
-// => DispatcherServlet 변경 
+// => PageController 인터페이스 삭제  
+// => XxxController의 request hanlder의 @RequestMapping 애노테이션 붙이기 
+// => @RequestMapping이 붙은 메서드를 호출하도록 DispatcherServlet 변경 
 
 // dummy 클래스!
 // => 기존 버전에서 계속 존재했던 클래스라서 그대로 둠.
