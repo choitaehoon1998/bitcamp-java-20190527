@@ -43,6 +43,7 @@ public class Controller04_1 {
       Model model, // Map과 같다. 둘 중 한 개만 받으면 된다.
       PrintWriter out // 클라이언트에게 콘텐트를 보낼 때 사용할 출력 스트림
       ) {
+    
     out.printf("ServletContext: %b\n", sc != null);
     out.printf("ServletRequest: %b\n", request != null);
     out.printf("ServletResponse: %b\n", response != null);
@@ -51,8 +52,8 @@ public class Controller04_1 {
     out.printf("HttpSession: %b\n", session != null);
     out.printf("Map: %b\n", map != null);
     out.printf("Model: %b\n", model != null);
-    out.printf("HttpServletRequest == ServletRequest %b\n", request2 == request);
-    out.printf("HttpServletResponse == ServletResponse %b\n", response2 == response);
+    out.printf("ServletRequest == HttpServletRequest : %b\n", request == request2);
+    out.printf("ServletResponse == HttpServletResponse : %b\n", response == response2);
   }
 }
 

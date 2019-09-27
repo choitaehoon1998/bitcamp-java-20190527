@@ -3,7 +3,6 @@ package bitcamp.app1;
 
 import java.beans.PropertyEditorSupport;
 import java.io.PrintWriter;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.springframework.stereotype.Controller;
@@ -74,9 +73,9 @@ public class Controller04_4 {
   // 프로퍼티 에디터를 프론트 컨트롤러에게 적용하기
   // => 프론트 컨트롤러는 request handler를 호출하기 전에 
   //    넘겨줄 아규먼트 값을 준비해야 한다.
-  //    각 아규먼트 값을 준비할 때
-  //    @InitBinder가 표시된 메서드(RequestHandler를 실행할때 사용할 도구를 준비 하는 메서드 )
-  //    를 호출하여  프로퍼티 에디터(변환기)를 준비시킨다.
+  //    각 아규먼트 값을 준비할 때 
+  //    @InitBinder가 표시된 메서드(request handler를 실행할 때 사용할 도구를 준비하는 메서드)
+  //    를 호출하여 프로퍼티 에디터(변환기)를 준비시킨다.
   //    그리고 이 준비된 값 변환기(프로퍼티 에디터)를 이용하여 파라미터 값을 
   //    request handler의 아규먼트가 원하는 타입의 값을 바꾼다.
   //    request handler의 아규먼트 개수 만큼 이 메서드를 호출한다.
@@ -99,18 +98,17 @@ public class Controller04_4 {
         java.util.Date.class, // String을 Date 타입으로 바꾸는 에디터임을 지정한다. 
         propEditor  // 바꿔주는 일을 하는 프로퍼티 에디터를 등록한다.
     );
+    
     // WebDataBinder에 프로퍼티 에디터 등록하기
     binder.registerCustomEditor(
         Car.class, // String을 Car 타입으로 바꾸는 에디터임을 지정한다. 
         new CarPropertyEditor()  // 바꿔주는 일을 하는 프로퍼티 에디터를 등록한다.
     );
     
-    
     // WebDataBinder에 프로퍼티 에디터 등록하기
     binder.registerCustomEditor(
         Engine.class, // String을 Engine 타입으로 바꾸는 에디터임을 지정한다. 
         new EnginePropertyEditor()  // 바꿔주는 일을 하는 프로퍼티 에디터를 등록한다.
-    
     );
   }
 
@@ -144,11 +142,13 @@ public class Controller04_4 {
       // 문자열을 Date 객체로 바꾸기 위해 이 메서드를 호출할 것이다.
       // 그러면 이 메서드에서 문자열을 프로퍼티가 원하는 타입으로 변환한 후 저장하면 된다.
       try {
-        //1) String == > java.util.Date
+        //1) String ==> java.util.Date
         //Date date = format.parse(text); // String ===> java.util.Date 
         //setValue(date); // 내부에 저장
-        //2) String ==>  java.sql.Date
-       setValue(java.sql.Date.valueOf(text));
+        
+        //2) String ==> java.sql.Date
+        setValue(java.sql.Date.valueOf(text));
+        
       } catch (Exception e) {
         throw new IllegalArgumentException(e);
       }
@@ -189,7 +189,7 @@ public class Controller04_4 {
       Engine engine = new Engine();
       engine.setModel(values[0]);
       engine.setCc(Integer.parseInt(values[1]));
-      engine.setValve(Integer.parseInt(values[2]));
+      engine.setValve(Integer.parseInt(values[1]));
       
       setValue(engine);
     }

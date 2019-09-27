@@ -10,7 +10,6 @@
   </description>
 
   <display-name>java-spring-webmvc</display-name>
-
   
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
