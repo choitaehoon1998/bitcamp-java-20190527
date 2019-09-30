@@ -1,61 +1,60 @@
-package com.eomcs.lms.controller;
+package com.eomcs.lms.web;
 
+import java.nio.file.Paths;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import com.eomcs.lms.dao.PhotoBoardDao;
 import com.eomcs.lms.dao.PhotoFileDao;
 import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.lms.domain.PhotoFile;
-
+@RequestMapping("/photoboard")
 @Controller
 public class PhotoBoardController {
-  
+
   @Resource private PlatformTransactionManager txManager;
   @Resource private PhotoBoardDao photoBoardDao;
   @Resource private PhotoFileDao photoFileDao;
-  
-  @RequestMapping("/photoboard/form")
-  public String form() {
-    return "/jsp/photoboard/form.jsp";
+
+  @RequestMapping("form")
+  public void form() {
   }
-  
-  @RequestMapping("/photoboard/add")
+
+  @RequestMapping("add")
   public String add(
       HttpServletRequest request, 
       PhotoBoard photoBoard,
-      Part[] filePath) throws Exception {
-    
+      MultipartFile[] filePath) throws Exception {
+
     String uploadDir = request.getServletContext().getRealPath("/upload/photoboard");
     // 트랜잭션 동작을 정의한다.
     DefaultTransactionDefinition def = new DefaultTransactionDefinition();
     def.setName("tx1");
     def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-    
+
     // 정의된 트랜잭션 동작에 따라 작업을 수행할 트랜잭션 객체를 준비한다. 
     TransactionStatus status = txManager.getTransaction(def);
-    
+
     try {
       photoBoardDao.insert(photoBoard);
-      
+
       int count = 0;
-      for (Part part : filePath) {
+      for (MultipartFile part : filePath) {
         if (part.getSize() == 0)
           continue;
-        
+
         // 클라이언트가 보낸 파일을 디스크에 저장한다.
         String filename = UUID.randomUUID().toString();
-        part.write(uploadDir + "/" + filename);
-        
+        part.transferTo(Paths.get((uploadDir + "/" + filename)));
         // 저장한 파일명을 DB에 입력한다.
         PhotoFile photoFile = new PhotoFile();
         photoFile.setFilePath(filename);
@@ -63,51 +62,51 @@ public class PhotoBoardController {
         photoFileDao.insert(photoFile);
         count++;
       }
-      
+
       if (count == 0) {
         throw new Exception("사진 파일 없음!");
       }
-      
+
       txManager.commit(status);
       return "redirect:list";
-      
+
     } catch (Exception e) { 
       txManager.rollback(status);
       throw e;
     }
   }
-  
-  @RequestMapping("/photoboard/delete")
+
+  @RequestMapping("delete")
   public String delete(int no) 
       throws Exception {
-    
+
     // 트랜잭션 동작을 정의한다.
     DefaultTransactionDefinition def = new DefaultTransactionDefinition();
     def.setName("tx1");
     def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-    
+
     // 정의된 트랜잭션 동작에 따라 작업을 수행할 트랜잭션 객체를 준비한다. 
     TransactionStatus status = txManager.getTransaction(def);
-    
+
     try {
       if (photoBoardDao.findBy(no) == null) {
         throw new Exception("해당 데이터가 없습니다.");
       }
-      
+
       photoFileDao.deleteAll(no);
       photoBoardDao.delete(no);
-      
+
       txManager.commit(status);
       return "redirect:list";
-      
+
     } catch (Exception e) {
       txManager.rollback(status);
       throw e;
     }
   }
-  
-  @RequestMapping("/photoboard/detail")
-  public String detail(Map<String,Object> model, int no) 
+
+  @RequestMapping("detail")
+  public void detail(Model model, int no) 
       throws Exception {
 
     PhotoBoard photoBoard = photoBoardDao.findWithFilesBy(no);
@@ -116,24 +115,22 @@ public class PhotoBoardController {
     }
     photoBoardDao.increaseViewCount(no);
 
-    model.put("photoBoard", photoBoard);
-    return "/jsp/photoboard/detail.jsp";
+    model.addAttribute("photoBoard", photoBoard);
   }
-  
-  @RequestMapping("/photoboard/list")
-  public String list(Map<String,Object> model) 
+
+  @RequestMapping("list")
+  public void list(Model model) 
       throws Exception {
 
     List<PhotoBoard> photoBoards = photoBoardDao.findAll();
-    model.put("photoBoards", photoBoards);
-    return "/jsp/photoboard/list.jsp";
+    model.addAttribute("photoBoards", photoBoards);
   }
-  
-  @RequestMapping("/photoboard/update")
+
+  @RequestMapping("update")
   public String update(
       HttpServletRequest request, 
       PhotoBoard photoBoard,
-      Part[] filePath) throws Exception {
+      MultipartFile[] filePath) throws Exception {
 
     String uploadDir = request.getServletContext().getRealPath("/upload/photoboard");
 
@@ -150,14 +147,13 @@ public class PhotoBoardController {
       photoFileDao.deleteAll(photoBoard.getNo());
 
       int count = 0;
-      for (Part part : filePath) {
+      for (MultipartFile part : filePath) {
         if (part.getSize() == 0)
           continue;
-        
+
         // 클라이언트가 보낸 파일을 디스크에 저장한다.
         String filename = UUID.randomUUID().toString();
-        part.write(uploadDir + "/" + filename);
-
+        part.transferTo(Paths.get((uploadDir + "/" + filename)));
         // 저장한 파일명을 DB에 입력한다.
         PhotoFile photoFile = new PhotoFile();
         photoFile.setFilePath(filename);

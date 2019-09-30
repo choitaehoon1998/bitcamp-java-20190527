@@ -1,32 +1,33 @@
-package com.eomcs.lms.controller;
+package com.eomcs.lms.web;
 
+import java.nio.file.Paths;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
 
 @Controller
+@RequestMapping("/member")
 public class MemberController {
 
   @Resource 
   private MemberDao memberDao;
 
-  @RequestMapping("/member/form")
-  public String form() {
-    return "/jsp/member/form.jsp";
+  @RequestMapping("form")
+  public void form() {
   }
   
-  @RequestMapping("/member/add")
+  @RequestMapping("add")
   public String add(
       HttpServletRequest request, 
       Member member, 
-      Part file) throws Exception {
+      MultipartFile file) throws Exception {
     
     String uploadDir = request.getServletContext().getRealPath("/upload/member");
     
@@ -34,14 +35,14 @@ public class MemberController {
     if (file != null && file.getSize() > 0) {
       String filename = UUID.randomUUID().toString();
       member.setPhoto(filename);
-      file.write(uploadDir + "/" + filename);
+      file.transferTo(Paths.get((uploadDir + "/" + filename)));
     }
 
     memberDao.insert(member);
     return "redirect:list";
   }
   
-  @RequestMapping("/member/delete")
+  @RequestMapping("delete")
   public String delete(int no) 
       throws Exception {
 
@@ -51,8 +52,8 @@ public class MemberController {
     return "redirect:list";
   }
   
-  @RequestMapping("/member/detail")
-  public String detail(Map<String,Object> model, int no) 
+  @RequestMapping("detail")
+  public void detail(Model model, int no) 
       throws Exception {
 
     Member member = memberDao.findBy(no);
@@ -60,31 +61,28 @@ public class MemberController {
       throw new Exception("해당 번호의 데이터가 없습니다!");
     } 
 
-    model.put("member", member);
-    return "/jsp/member/detail.jsp";
+    model.addAttribute("member", member);
   }
   
-  @RequestMapping("/member/list")
-  public String list(Map<String,Object> model) throws Exception {
+  @RequestMapping("list")
+  public void list(Model model) throws Exception {
 
     List<Member> members = memberDao.findAll();
-    model.put("members", members);
-    return "/jsp/member/list.jsp";
+    model.addAttribute("members", members);
   }
   
-  @RequestMapping("/member/search")
-  public String search(Map<String,Object> model, String keyword) throws Exception {
+  @RequestMapping("search")
+  public void search(Model model, String keyword) throws Exception {
 
     List<Member> members = memberDao.findByKeyword(keyword);
-    model.put("members", members);
-    return "/jsp/member/search.jsp";
+    model.addAttribute("members", members);
   }
   
-  @RequestMapping("/member/update")
+  @RequestMapping("update")
   public String update(
       HttpServletRequest request,
       Member member,
-      Part file) 
+      MultipartFile file) 
       throws Exception {
     
     String uploadDir = request.getServletContext().getRealPath("/upload/member");
@@ -93,7 +91,7 @@ public class MemberController {
     if (file != null && file.getSize() > 0) {
       String filename = UUID.randomUUID().toString();
       member.setPhoto(filename);
-      file.write(uploadDir + "/" + filename);
+      file.transferTo(Paths.get((uploadDir + "/" + filename)));
     }
     memberDao.update(member);
     return "redirect:list";
