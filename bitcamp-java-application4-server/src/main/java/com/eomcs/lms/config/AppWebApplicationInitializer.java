@@ -1,4 +1,3 @@
-  
 package com.eomcs.lms.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
@@ -8,7 +7,8 @@ public class AppWebApplicationInitializer
 
   @Override
   protected Class<?>[] getRootConfigClasses() {
-    return new Class<?>[] {AppConfig.class ,DatabaseConfig.class ,MybatisConfig.class};
+    return new Class<?>[] {
+      AppConfig.class, DatabaseConfig.class, MybatisConfig.class};
   }
   
   @Override
@@ -26,3 +26,9 @@ public class AppWebApplicationInitializer
     return "app";
   }
 }
+
+
+
+
+
+

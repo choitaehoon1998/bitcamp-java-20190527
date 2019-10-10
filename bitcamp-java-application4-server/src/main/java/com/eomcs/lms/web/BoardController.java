@@ -20,32 +20,33 @@ public class BoardController {
   @GetMapping("form")
   public void form() {
   }
-
+  
   @PostMapping("add")
   public String add(Board board) throws Exception {
     boardService.insert(board);
     return "redirect:list";
   }
-
+  
   @GetMapping("delete")
   public String delete(int no) throws Exception {
     boardService.delete(no);
     return "redirect:list";
   }
-
+  
   @GetMapping("detail")
-  public void detail(Model model, int no) throws Exception {
+  public void detail(Model model, int no) 
+      throws Exception {
     Board board = boardService.get(no);
     model.addAttribute("board", board);
   }
-
+  
   @GetMapping("list")
-  public void list(Model model) throws Exception {
-
+  public void list(Model model) 
+      throws Exception {
     List<Board> boards = boardService.list();
     model.addAttribute("boards", boards);
   }
-
+  
   @PostMapping("update")
   public String update(Board board) 
       throws Exception {

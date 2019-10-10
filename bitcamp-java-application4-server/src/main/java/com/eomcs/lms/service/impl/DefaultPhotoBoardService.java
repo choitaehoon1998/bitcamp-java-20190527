@@ -4,14 +4,14 @@ import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
 import com.eomcs.lms.dao.PhotoBoardDao;
 import com.eomcs.lms.dao.PhotoFileDao;
 import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.lms.domain.PhotoFile;
 import com.eomcs.lms.service.PhotoBoardService;
+
 @Service
-public class DefaultPhotoBoardService implements PhotoBoardService{
+public class DefaultPhotoBoardService implements PhotoBoardService {
 
   @Resource private PhotoBoardDao photoBoardDao;
   @Resource private PhotoFileDao photoFileDao;
@@ -19,21 +19,19 @@ public class DefaultPhotoBoardService implements PhotoBoardService{
   @Transactional
   @Override
   public void insert(PhotoBoard photoBoard) throws Exception {
-
-    if(photoBoard.getFiles().size()== 0) {
+    if (photoBoard.getFiles().size() == 0) {
       throw new Exception("사진 파일 없음!");
     }
     photoBoardDao.insert(photoBoard);
-
     for (PhotoFile file : photoBoard.getFiles()) {
-      // 사진 파일 데이터를 저장하기 전에 .
-      // 사진 파일 데이터를 저장할떄 이게시물 번호를 사용하기 때문이다 .
-      // 이전에 저장한 사진 게시물 번호를 먼저 설정한다 . 
-
-      file.setBoardNo(photoBoard.getNo());
+      // 사진 파일 데이터를 저장하기 전에,
+      // 이전에 저장한 사진 게시물 번호를 먼저 설정한다.
+      // 사진 파일 데이터를 저장할 때 이 게시물 번호를 사용하기 때문이다.
+      file.setBoardNo(photoBoard.getNo()); 
       photoFileDao.insert(file);
     }
   }
+
   @Transactional
   @Override
   public void delete(int no) throws Exception {
@@ -54,25 +52,25 @@ public class DefaultPhotoBoardService implements PhotoBoardService{
     return photoBoard;
   }
 
-  @RequestMapping("list")
-  public List<PhotoBoard> list()  throws Exception {
+  @Override
+  public List<PhotoBoard> list() throws Exception {
     return photoBoardDao.findAll();
-
   }
+
   @Transactional
   @Override
   public void update(PhotoBoard photoBoard) throws Exception {
-    if(photoBoard.getFiles().size()== 0) {
+    if (photoBoard.getFiles().size() == 0) {
       throw new Exception("사진 파일 없음!");
     }
+
     photoBoardDao.update(photoBoard);
     photoFileDao.deleteAll(photoBoard.getNo());
     for (PhotoFile file : photoBoard.getFiles()) {
-      // 사진 파일 데이터를 저장하기 전에 .
-      // 사진 파일 데이터를 저장할떄 이게시물 번호를 사용하기 때문이다 .
-      // 이전에 저장한 사진 게시물 번호를 먼저 설정한다 . 
-
-      file.setBoardNo(photoBoard.getNo());
+      // 사진 파일 데이터를 저장하기 전에,
+      // 이전에 저장한 사진 게시물 번호를 먼저 설정한다.
+      // 사진 파일 데이터를 저장할 때 이 게시물 번호를 사용하기 때문이다.
+      file.setBoardNo(photoBoard.getNo()); 
       photoFileDao.insert(file);
     }
   }
