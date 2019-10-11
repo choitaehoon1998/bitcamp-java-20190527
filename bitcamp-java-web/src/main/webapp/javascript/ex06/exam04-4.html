@@ -61,7 +61,7 @@ tbody tr:hover {
 //var el = document.querySelectorAll("tbody a");
 
 // 이런 경우 부모 태그에 리스너를 등록하면 훨씬 더 광범위하게 클릭 이벤트를 발생시킬 수 있다.
-var el = document.querySelectorAll("tbody tr");
+ var el = document.querySelectorAll("tbody tr");
 for (var e of el) {
   e.addEventListener("click", function(e) {
     window.alert("제목을 눌렀음!");
