@@ -7,14 +7,12 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 // 역할:
 // => 로그인 사용자만 등록, 변경, 삭제를 수행할 수 있게 한다.
 //
-@WebFilter
 public class AuthFilter implements Filter {
 
   String[] path;
@@ -22,17 +20,7 @@ public class AuthFilter implements Filter {
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
     // web.xml에 설정된 초기화 파라미터 값을 가져온다.
-   // path = filterConfig.getInitParameter("path").split(",");
-    if(path.length>0) {
-      for(String p : path) {
-        System.out.println(p);
-      }
-    }else {
-      
-    }
-    path[0] = "add";
-    path[1] = "delete";
-    path[2] = "update";
+    path = filterConfig.getInitParameter("path").split(",");
   }
   
   @Override

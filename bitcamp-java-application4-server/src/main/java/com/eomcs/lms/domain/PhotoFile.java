@@ -6,9 +6,7 @@ public class PhotoFile implements Serializable {
   private static final long serialVersionUID = 1L;
 
   private int no;
-  
   private String filePath;
-  
   private int boardNo;
   
   @Override

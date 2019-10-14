@@ -7,26 +7,27 @@ import com.eomcs.lms.dao.BoardDao;
 import com.eomcs.lms.domain.Board;
 import com.eomcs.lms.service.BoardService;
 
-// BoardService 기본 구현체 
+//BoardService 기본 구현체 
 //
+
 @Service
 public class DefaultBoardService implements BoardService {
 
   @Resource
   private BoardDao boardDao;
-
+  
   @Override
-  public void insert(Board board) throws Exception {
+  public void insert(Board board)throws Exception {
     boardDao.insert(board);
   }
-
+  
   @Override
-  public void delete(int no) throws Exception {
-    if (boardDao.delete(no) == 0) {
-      throw new Exception("해당 데이터가 없습니다.");
+  public void delete(int no) throws Exception{
+    if(boardDao.delete(no)==0) {
+      throw new Exception("해당 데이터가업습니다");
     }
   }
-
+  
   @Override
   public Board get(int no) throws Exception {
     Board board = boardDao.findBy(no);
@@ -38,12 +39,15 @@ public class DefaultBoardService implements BoardService {
   }
 
   @Override
-  public List<Board> list() throws Exception {
+  public List<Board>list() 
+      throws Exception {
     return boardDao.findAll();
   }
-
+ 
   @Override
-  public void update(Board board) throws Exception {
+  public void update(Board board) 
+      throws Exception {
     boardDao.update(board);
   }
+
 }
