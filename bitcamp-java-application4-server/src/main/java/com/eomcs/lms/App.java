@@ -1,4 +1,4 @@
-// v61_1 : Back-end 와 Front-end 구분하기    
+// v61_1 : Back-end 와 Front-end 분리하기    
 package com.eomcs.lms;
 
 // 작업:

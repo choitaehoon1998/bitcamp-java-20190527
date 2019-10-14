@@ -8,7 +8,7 @@ extends AbstractAnnotationConfigDispatcherServletInitializer{
   @Override
   protected Class<?>[] getRootConfigClasses() {
     // TODO Auto-generated method stub
-    return new Class<?>[] {Appconfig.class};
+    return new Class<?>[] {Appconfig.class,mybatisconfig.class};
   }
 
   @Override

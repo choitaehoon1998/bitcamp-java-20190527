@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ohora.greenright.dao.CommunityDao">
+  <select id="findAll">
+  select 
+    post_id,
+    created_date,
+    title,
+    contents,
+    vw_count
+   from posts
+   order by post_id desc 
+  </select>
+    <select id="findBy" parameterType="int">
+  select 
+    post_id,
+    created_date,
+    title,
+    contents,
+    vw_count
+   from posts
+   where bord_id=#{haha}
+  </select>
+    <update id="increaseViewCount" parameterType="int">
+    update posts set
+      vw_count = vw_count + 1
+    where board_id=#{value}
+  </update>
+  <insert id="insert" parameterType="Community">
+  insert into 
+    
+  
+  
+  </insert>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
