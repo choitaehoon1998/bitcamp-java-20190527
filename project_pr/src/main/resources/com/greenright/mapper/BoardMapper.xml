@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.greenright.dao.BoardDao">
+  
+  <resultMap type="Board" id="BoardMap">
+  <id column="board_id" property="no"/>
+  <result column="vw_count" property="viewCount"/>
+  <result column="created_date" property="createdDate"/>
+  <result column="member_no" property="memberNo"/>
+  </resultMap>
+  
+  <resultMap type="Board" id="BoardsWithFilesMap">
+  <id column="board_id" property="no"/>
+  <result column="vw_count" property="viewCount"/>
+  <result column="created_date" property="createdDate"/>
+  <result column="member_no" property="memberNo"/>
+  
+  <collection property ="files" ofType="BoardPhoto">
+  <id column="post_photo_id" property="no"/>
+  <result column="board_id" property="boardNo"/>
+  <result column="photo_path" property="filePath"/>
+  </collection>
+  </resultMap>
+  
+  <select id="findAll" resultMap="BoardMap">
+  select
+    board_id,
+    title,
+    created_date,
+    vw_count,
+    contents,
+    member_no
+  from
+    boards
+    order by
+     board_id desc
+  </select>
+  
+  <select id="findBy" parameterType="int" resultMap ="BoardMap">
+  select 
+    board_id,
+    title,
+    created_date,
+    vw_count,
+    contents,
+    member_no
+  from
+    boards
+  where
+    board_id=#{value}
+  </select>
+  
+  <select id ="findWithFilesBy"
+          parameterType="int"
+          resultMap="BoardsWithFilesMap">
+  select 
+    b.board_id,
+    b.contents,
+    b.title,
+    b.created_date,
+    b.vw_count,
+    b.member_no,
+    p.post_photo_id,
+    p.photo_path
+  from
+    boards b
+      left outer join post_photos p on b.board_id=p.board_id
+  where
+    b.board_id=#{value}
+  </select>
+  
+  <update id="increaseViewCount" parameterType="int">
+   update boards set
+    vw_count=vw_count + 1
+    where 
+      board_id=#{value}
+  </update>
+  
+  <update id="update" parameterType="Board"> 
+  update boards set
+  title=#{title}
+  contents=#{contents}
+  where board_id=#{no} 
+  </update>
+  <insert id="insert"
+          parameterType="Board"
+          useGeneratedKeys="true"
+          keyColumn="board_id"
+          keyProperty="no">
+          insert into boards(title,contents)
+          values(#{title},#{contents})
+          </insert>
+  
+  <delete id="delete" parameterType="int">
+  delete from boards
+  where board_id=#{no}
+  </delete>
+
+</mapper>
